@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isAPIRoute, isMobileRoute, isMobile } from "./utils/route";
-import { MOBILE_HOME_PAGE, DESKTOP_HOME_PAGE } from "@/constants/route";
+import {
+  MOBILE_HOME_PAGE,
+  DESKTOP_HOME_PAGE,
+} from "@/constants/frontend/route";
 
 export default async function middleware(req: NextRequest) {
   const userAgent = req.headers.get("user-agent");

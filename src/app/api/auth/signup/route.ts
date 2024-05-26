@@ -6,14 +6,22 @@ import {
   HttpBadRequestHandler,
   HttpCreatedHandler,
 } from "@/backend/helpers/httpExceptionHandler";
+import { signUpValidation } from "@/validations/signup";
+import { validate } from "@/utils/backend/zodValidation";
 
 connect();
 
 const { findOne, save } = UserService();
 export async function POST(request: NextRequest) {
   try {
-    const { username, email, password } = await request.json();
+    const json = await request.json();
 
+    const validatedResult = validate(json, signUpValidation);
+    if (validatedResult) {
+      return HttpBadRequestHandler(validatedResult);
+    }
+
+    const { username, email, password } = json;
     const user = await findOne(email);
     if (user) {
       return HttpBadRequestHandler("user already exists");

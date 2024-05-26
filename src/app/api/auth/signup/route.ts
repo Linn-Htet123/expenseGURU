@@ -7,7 +7,7 @@ import {
   HttpCreatedHandler,
 } from "@/backend/helpers/httpExceptionHandler";
 import { signUpValidation } from "@/validations/signup";
-import { formatZodError } from "@/utils/formatZodError";
+import { validate } from "@/utils/backend/zodValidation";
 
 connect();
 
@@ -15,9 +15,10 @@ const { findOne, save } = UserService();
 export async function POST(request: NextRequest) {
   try {
     const json = await request.json();
-    const parse = signUpValidation.safeParse(json);
-    if (!parse.success) {
-      return HttpBadRequestHandler(formatZodError(parse.error));
+
+    const validatedResult = validate(json, signUpValidation);
+    if (validatedResult) {
+      return HttpBadRequestHandler(validatedResult);
     }
 
     const { username, email, password } = json;

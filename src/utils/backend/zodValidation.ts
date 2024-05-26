@@ -1,5 +1,4 @@
-import { HttpBadRequestHandler } from "@/backend/helpers/httpExceptionHandler";
-import { ZodError, ZodIssue, ZodObject, z } from "zod";
+import { ZodError, ZodIssue, ZodObject } from "zod";
 
 export const formatZodError = (error: ZodError) => {
   const { issues } = error;

@@ -31,6 +31,10 @@ const config = {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
         },
+        primaryDark: {
+          DEFAULT: "var(--primary-400)",
+          foreground: "var(--primary-foreground)",
+        },
         secondary: {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",

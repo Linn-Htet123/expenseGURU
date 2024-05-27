@@ -14,12 +14,13 @@ const Landing = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-      router.replace(getMobileRoute(Route.WELCOME));
     }, 2500);
 
     return () => clearTimeout(timer);
   }, []);
-
+  if (!loading) {
+    router.push(getMobileRoute(Route.WELCOME));
+  }
   return (
     <>
       {loading ? (

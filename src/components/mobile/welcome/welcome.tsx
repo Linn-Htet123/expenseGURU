@@ -1,3 +1,4 @@
+"use client";
 import styles from "./welcome.module.scss";
 import Bg from "../../../../public/welcome-bg.png";
 import Person from "../../../../public/welcome-man.png";
@@ -7,6 +8,7 @@ import Link from "next/link";
 import { getMobileRoute } from "@/utils/route";
 import { Route } from "@/enums/route";
 import Button from "@/components/common/button";
+import dynamic from "next/dynamic";
 
 const WelcomeWrapper = () => {
   return (
@@ -50,4 +52,6 @@ const WelcomeWrapper = () => {
   );
 };
 
-export default WelcomeWrapper;
+export default dynamic(() => Promise.resolve(WelcomeWrapper), {
+  ssr: false,
+});

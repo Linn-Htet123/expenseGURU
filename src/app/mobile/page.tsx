@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
+import Landing from "@/components/mobile/landing";
 
 export default function Home() {
   return (
     <div>
-      <Button size={"sm"}>Helo world</Button>
+      <Landing />
     </div>
   );
 }

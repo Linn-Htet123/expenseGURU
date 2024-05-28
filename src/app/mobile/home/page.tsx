@@ -48,7 +48,7 @@ const HomePage = () => {
         <span className="text-lg font-medium text-slate-500 px-4">
           Transaction History
         </span>
-        <ScrollArea className="w-full h-[270px] px-4">
+        <ScrollArea className="w-full h-[300px] px-4">
           <div className="flex justify-between items-center border-b border-slate-100 my-1">
             <div className="flex flex-col py-2">
               <div className="font-medium text-md">Movies</div>

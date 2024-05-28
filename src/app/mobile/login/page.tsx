@@ -40,12 +40,12 @@ const Login = () => {
               Login
             </Button>
             <Label className="text-center w-full flex justify-center">
-              Have an account?
+              Do not have an account?
               <Link
-                href={getMobileRoute(Route.LOGIN)}
+                href={getMobileRoute(Route.SIGNUP)}
                 className="text-primary ml-2"
               >
-                Login
+                Signup
               </Link>
             </Label>
           </div>

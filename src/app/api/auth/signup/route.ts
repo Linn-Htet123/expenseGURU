@@ -14,15 +14,15 @@ connect();
 const { findOne, save } = UserService();
 export async function POST(request: NextRequest) {
   try {
-    const json = await request.json();
+    const body = await request.json();
 
-    const validatedResult = validate(json, signUpValidation);
+    const validatedResult = validate(body, signUpValidation);
     if (validatedResult) {
       return HttpBadRequestHandler(validatedResult);
     }
 
-    const { username, email, password } = json;
-    const user = await findOne(email);
+    const { username, email, password } = body;
+    const user = await findOne({ email });
     if (user) {
       return HttpBadRequestHandler("user already exists");
     }

@@ -22,17 +22,13 @@ const Landing = () => {
     router.push(getMobileRoute(Route.WELCOME));
   }
   return (
-    <>
-      {loading ? (
-        <div className="h-dvh bg-gradient-to-br from-primary to-[#488d88] flex flex-col justify-center items-center text-white font-bold text-3xl">
-          <Lottie
-            animationData={Loading}
-            style={{ width: "150px", height: "150px" }}
-          />
-          <div className="relative top-[-10px]">ExpenseGURU</div>
-        </div>
-      ) : null}
-    </>
+    <div className="h-dvh bg-gradient-to-br from-primary to-[#488d88] flex flex-col justify-center items-center text-white font-bold text-3xl">
+      <Lottie
+        animationData={Loading}
+        style={{ width: "150px", height: "150px" }}
+      />
+      <div className="relative top-[-10px]">ExpenseGURU</div>
+    </div>
   );
 };
 

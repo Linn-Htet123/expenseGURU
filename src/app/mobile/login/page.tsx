@@ -36,9 +36,10 @@ const Login = () => {
               <Label htmlFor="password">Password</Label>
               <Input id="password" required type="password" />
             </div>
-            <Button className="w-full" type="submit">
+            <Button className="w-full" type="submit" variant="gooeyLeft">
               Login
             </Button>
+
             <Label className="text-center w-full flex justify-center">
               Do not have an account?
               <Link

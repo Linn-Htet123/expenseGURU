@@ -40,7 +40,7 @@ const Signup = () => {
               <Label htmlFor="password">Password</Label>
               <Input id="password" required type="password" />
             </div>
-            <Button className="w-full" type="submit">
+            <Button className="w-full" type="submit" variant="gooeyLeft">
               Signup
             </Button>
             <Label className="text-center w-full flex justify-center">

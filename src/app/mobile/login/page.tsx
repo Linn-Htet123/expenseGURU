@@ -5,20 +5,27 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { getMobileRoute } from "@/utils/route";
+import { getMobileRoute } from "@/utils/frontend/route";
+import { useRouter } from "next/navigation";
 import { Route } from "@/enums/route";
 import { useLogin } from "@/hooks/useLogin";
 import { useState } from "react";
 import { SignInType } from "@/validations/sign-in";
+import { Loading } from "@/components/common/loading";
+
 const Login = () => {
-  const { login } = useLogin();
+  const { login, loading } = useLogin();
+  const router = useRouter();
   const [user, setUser] = useState<typeof SignInType>({
     email: "",
     password: "",
   });
   const handleSubmit = async (e: { preventDefault: () => void }) => {
-    await login(user);
     e.preventDefault();
+    try {
+      await login(user);
+    } catch {}
+    router.push(getMobileRoute(Route.HOME));
   };
   return (
     <div
@@ -58,8 +65,13 @@ const Login = () => {
                   }
                 />
               </div>
-              <Button className="w-full" type="submit" variant="gooeyLeft">
-                Login
+              <Button
+                className="w-full"
+                type="submit"
+                variant="gooeyLeft"
+                disabled={loading}
+              >
+                {loading ? <Loading /> : "Login"}
               </Button>
 
               <Label className="text-center w-full flex justify-center">

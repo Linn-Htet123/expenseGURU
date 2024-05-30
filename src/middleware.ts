@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { isAPIRoute, isMobileRoute, isMobile } from "./utils/route";
+import { isAPIRoute, isMobileRoute, isMobile } from "./utils/frontend/route";
 import {
   MOBILE_HOME_PAGE,
   DESKTOP_HOME_PAGE,

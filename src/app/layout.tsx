@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
-
 import "./globals.css";
+import { Toaster } from "@/components/ui/sonner";
+import AuthWrapper from "@/components/common/authWrapper";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -26,7 +28,8 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <AuthWrapper>{children}</AuthWrapper>
+        <Toaster />
       </body>
     </html>
   );

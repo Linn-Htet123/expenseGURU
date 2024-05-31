@@ -4,7 +4,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { getMobileRoute } from "@/utils/frontend/route";
 import { Route } from "@/enums/route";
 const Signup = () => {
   return (
@@ -45,10 +44,7 @@ const Signup = () => {
             </Button>
             <Label className="text-center w-full flex justify-center">
               Already have an account?{" "}
-              <Link
-                href={getMobileRoute(Route.LOGIN)}
-                className="text-primary ml-2"
-              >
+              <Link href={Route.LOGIN} className="text-primary ml-2">
                 Login
               </Link>
             </Label>

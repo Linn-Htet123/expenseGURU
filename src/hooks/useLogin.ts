@@ -1,11 +1,12 @@
 import axios from "axios";
 import { SignInType } from "@/validations/sign-in";
-import { useContext, useState } from "react";
 import { toast } from "sonner";
+import { useContext, useState } from "react";
 import { AuthContext } from "@/utils/frontend/AuthContext";
 
 export const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [user, setUser] = useState();
   // const { setUser } = useContext(AuthContext);
   const setLoggedInUserData = async () => {
     try {
@@ -54,5 +55,15 @@ export const useLogin = () => {
     }
   };
 
-  return { login, loading, getLoggedInUserData };
+  const getUpdatedAuthUser = () => {
+    setUser(getLoggedInUserData);
+  };
+  return {
+    login,
+    loading,
+    getLoggedInUserData,
+    user,
+    getUpdatedAuthUser,
+    setUser,
+  };
 };

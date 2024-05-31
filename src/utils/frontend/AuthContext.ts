@@ -5,7 +5,7 @@ interface User {
 }
 interface AuthContext {
   setUser: (user: User) => void;
-  user: User;
+  user: User | undefined;
 }
 
 export const AuthContext = createContext<AuthContext>({

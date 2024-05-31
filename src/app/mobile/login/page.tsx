@@ -25,7 +25,6 @@ const Login = () => {
     try {
       await login(user);
     } catch {}
-    router.push(getMobileRoute(Route.HOME));
   };
   return (
     <div

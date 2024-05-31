@@ -1,13 +1,17 @@
 import axios from "axios";
 import { SignInType } from "@/validations/sign-in";
 import { toast } from "sonner";
-import { useContext, useState } from "react";
-import { AuthContext } from "@/utils/frontend/AuthContext";
-
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { getMobileRoute } from "@/utils/frontend/route";
+import { Route } from "@/enums/route";
 export const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState();
-  // const { setUser } = useContext(AuthContext);
+  const [user, setUser] = useState<typeof SignInType>({
+    username: "",
+    email: "",
+  });
+  const router = useRouter();
   const setLoggedInUserData = async () => {
     try {
       const {
@@ -17,10 +21,7 @@ export const useLogin = () => {
         username: data.username,
         email: data.email,
       };
-      console.log(data);
       localStorage.setItem("userData", JSON.stringify(userData));
-      // setUser(userData);
-      console.log(userData);
       return userData;
     } catch (error) {
       console.log(error);
@@ -32,12 +33,10 @@ export const useLogin = () => {
     try {
       const userData = localStorage.getItem("userData");
       if (userData) {
-        return JSON.parse(userData);
+        setUser(JSON.parse(userData));
       }
-      return null;
     } catch (error) {
       console.log(error);
-      return null;
     }
   };
   const login = async (user: typeof SignInType) => {
@@ -46,6 +45,7 @@ export const useLogin = () => {
       const { status } = await axios.post("/api/auth/signin", user);
       if (status === 201) {
         await setLoggedInUserData();
+        router.push(getMobileRoute(Route.HOME));
       }
     } catch (error: any) {
       toast(error.response.data.message);
@@ -55,15 +55,10 @@ export const useLogin = () => {
     }
   };
 
-  const getUpdatedAuthUser = () => {
-    setUser(getLoggedInUserData);
-  };
   return {
     login,
     loading,
     getLoggedInUserData,
     user,
-    getUpdatedAuthUser,
-    setUser,
   };
 };

@@ -5,8 +5,6 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { getMobileRoute } from "@/utils/frontend/route";
-import { useRouter } from "next/navigation";
 import { Route } from "@/enums/route";
 import { useLogin } from "@/hooks/useLogin";
 import { useState } from "react";
@@ -15,7 +13,6 @@ import { Loading } from "@/components/common/loading";
 
 const Login = () => {
   const { login, loading } = useLogin();
-  const router = useRouter();
   const [user, setUser] = useState<SignInType>({
     email: "",
     password: "",
@@ -75,10 +72,7 @@ const Login = () => {
 
               <Label className="text-center w-full flex justify-center">
                 Do not have an account?
-                <Link
-                  href={getMobileRoute(Route.SIGNUP)}
-                  className="text-primary ml-2"
-                >
+                <Link href={Route.SIGNUP} className="text-primary ml-2">
                   Signup
                 </Link>
               </Label>

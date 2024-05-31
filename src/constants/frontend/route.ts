@@ -29,7 +29,7 @@ export const MOBILE_FOOTER = [
     activeIcon: BarChartActive,
   },
   {
-    name: "addIncome",
+    name: "add-income",
     route: Route.ADD_INCOME,
     icon: AddIcon,
   },

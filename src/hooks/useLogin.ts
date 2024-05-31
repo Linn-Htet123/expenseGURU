@@ -1,11 +1,12 @@
 import axios from "axios";
 import { SignInType } from "@/validations/sign-in";
-import { toast } from "sonner";
+import { ToastAction } from "@/components/ui/toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { getMobileRoute } from "@/utils/frontend/route";
 import { Route } from "@/enums/route";
 export const useLogin = () => {
+  const { toast } = useToast();
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const [user, setUser] = useState<{ username: ""; email: "" }>({
@@ -45,10 +46,13 @@ export const useLogin = () => {
       const { status } = await axios.post("/api/auth/signin", user);
       if (status === 201) {
         await setLoggedInUserData();
-        router.push(getMobileRoute(Route.HOME));
+        router.push(Route.HOME);
       }
     } catch (error: any) {
-      toast(error.response.data.message);
+      toast({
+        variant: "destructive",
+        title: error.response.data.message,
+      });
     } finally {
       setLoading(false);
     }

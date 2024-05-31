@@ -1,10 +1,9 @@
 "use client";
 import Image from "next/image";
-import HomeBg from "../../../../public/home-bg.png";
-import IncomeArrow from "../../../../public/income-arrow.png";
-import ExpenseArrow from "../../../../public/expense-arrow.png";
+import HomeBg from "../../../../../public/home-bg.png";
+import IncomeArrow from "../../../../../public/income-arrow.png";
+import ExpenseArrow from "../../../../../public/expense-arrow.png";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import Footer from "@/components/mobile/footer";
 import { useEffect } from "react";
 import { useLogin } from "@/hooks/useLogin";
 
@@ -94,7 +93,6 @@ const HomePage = () => {
           </div>
         </ScrollArea>
       </div>
-      <Footer />
     </div>
   );
 };

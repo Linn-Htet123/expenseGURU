@@ -5,7 +5,6 @@ import Person from "../../../../public/welcome-man.png";
 
 import Image from "next/image";
 import Link from "next/link";
-import { getMobileRoute } from "@/utils/frontend/route";
 import { Route } from "@/enums/route";
 import Button from "@/components/common/button";
 import dynamic from "next/dynamic";
@@ -35,14 +34,11 @@ const WelcomeWrapper = () => {
             <span>Save More</span>
           </div>
           <Button>
-            <Link href={getMobileRoute(Route.SIGNUP)}>Get Started</Link>
+            <Link href={Route.SIGNUP}>Get Started</Link>
           </Button>
           <div className="text-sm text-slate-400">
             Already have an account?
-            <Link
-              href={getMobileRoute(Route.LOGIN)}
-              className="text-primary ml-2"
-            >
+            <Link href={Route.LOGIN} className="text-primary ml-2">
               Log In
             </Link>
           </div>

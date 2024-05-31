@@ -2,8 +2,10 @@
 import Link from "next/link";
 import { MOBILE_FOOTER } from "@/constants/frontend/route";
 import Image from "next/image";
-
+import { usePathname } from "next/navigation";
+import { getMobileRoute } from "@/utils/frontend/route";
 const Footer = () => {
+  const pathname = usePathname();
   return (
     <div className="fixed bottom-0 left-0 w-full h-16 px-4">
       <div className="flex justify-around items-center h-full gap-4">
@@ -15,11 +17,20 @@ const Footer = () => {
           >
             <div
               className={`${
-                footer.name === "addIncome" &&
+                footer.name === "add-income" &&
                 "rounded-full bg-[#2f7e79] w-[68px] h-[68px] flex items-center justify-center relative bottom-6"
               }`}
             >
-              <Image src={footer.icon} alt={`${footer.name}`} />
+              <Image
+                src={
+                  footer.name === "add-income"
+                    ? footer.icon
+                    : pathname === "/" + getMobileRoute(footer.route)
+                    ? footer.activeIcon
+                    : footer.icon
+                }
+                alt={`${footer.name}`}
+              />
             </div>
           </Link>
         ))}

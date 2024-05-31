@@ -33,6 +33,6 @@ export const getDataFromToken = (request: NextRequest) => {
     // Return the user ID from the decoded token
     return decodedToken.id;
   } catch (error: any) {
-    throw new Error(error.message);
+    throw new Error("Unauthorized");
   }
 };

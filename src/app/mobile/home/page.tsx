@@ -5,9 +5,8 @@ import IncomeArrow from "../../../../public/income-arrow.png";
 import ExpenseArrow from "../../../../public/expense-arrow.png";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Footer from "@/components/mobile/footer";
-import { useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLogin } from "@/hooks/useLogin";
-import { AuthContext } from "@/utils/frontend/AuthContext";
 
 const HomePage = () => {
   const { user, getLoggedInUserData } = useLogin();

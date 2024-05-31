@@ -16,7 +16,7 @@ import { Loading } from "@/components/common/loading";
 const Login = () => {
   const { login, loading } = useLogin();
   const router = useRouter();
-  const [user, setUser] = useState<typeof SignInType>({
+  const [user, setUser] = useState<SignInType>({
     email: "",
     password: "",
   });

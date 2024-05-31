@@ -7,11 +7,11 @@ import { getMobileRoute } from "@/utils/frontend/route";
 import { Route } from "@/enums/route";
 export const useLogin = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [user, setUser] = useState<typeof SignInType>({
+  const router = useRouter();
+  const [user, setUser] = useState<{ username: ""; email: "" }>({
     username: "",
     email: "",
   });
-  const router = useRouter();
   const setLoggedInUserData = async () => {
     try {
       const {
@@ -39,7 +39,7 @@ export const useLogin = () => {
       console.log(error);
     }
   };
-  const login = async (user: typeof SignInType) => {
+  const login = async (user: SignInType) => {
     try {
       setLoading(true);
       const { status } = await axios.post("/api/auth/signin", user);
@@ -49,7 +49,6 @@ export const useLogin = () => {
       }
     } catch (error: any) {
       toast(error.response.data.message);
-      console.log(error);
     } finally {
       setLoading(false);
     }

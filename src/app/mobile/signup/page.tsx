@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { getMobileRoute } from "@/utils/route";
+import { getMobileRoute } from "@/utils/frontend/route";
 import { Route } from "@/enums/route";
 const Signup = () => {
   return (

@@ -5,7 +5,7 @@ import Person from "../../../../public/welcome-man.png";
 
 import Image from "next/image";
 import Link from "next/link";
-import { getMobileRoute } from "@/utils/route";
+import { getMobileRoute } from "@/utils/frontend/route";
 import { Route } from "@/enums/route";
 import Button from "@/components/common/button";
 import dynamic from "next/dynamic";

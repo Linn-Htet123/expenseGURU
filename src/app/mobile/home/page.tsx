@@ -1,11 +1,19 @@
+"use client";
 import Image from "next/image";
 import HomeBg from "../../../../public/home-bg.png";
 import IncomeArrow from "../../../../public/income-arrow.png";
 import ExpenseArrow from "../../../../public/expense-arrow.png";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Footer from "@/components/mobile/footer";
+import { useEffect } from "react";
+import { useLogin } from "@/hooks/useLogin";
 
 const HomePage = () => {
+  const { user, getLoggedInUserData } = useLogin();
+  useEffect(() => {
+    getLoggedInUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div
       className="h-dvh flex flex-col gap-2 py-4"
@@ -18,7 +26,7 @@ const HomePage = () => {
     >
       <div className="flex flex-col justify-start text-white py-2 px-4">
         <div className="text-sm">Good night</div>
-        <div className="text-xl font-semibold">Linn Htet</div>
+        <div className="text-xl font-semibold">{user.username}</div>
       </div>
       <div className="flex justify-center px-4">
         <div className="w-[360px] h-[180px] bg-[#2f7e79] flex flex-col justify-between rounded-2xl shadow-lg shadow-[#2f7e79] p-4 text-white">

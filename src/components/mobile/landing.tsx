@@ -5,7 +5,7 @@ import Loading from "@/lotties/landing_loading.json";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { Route } from "@/enums/route";
-import { getMobileRoute } from "@/utils/route";
+import { getMobileRoute } from "@/utils/frontend/route";
 
 const Landing = () => {
   const [loading, setLoading] = useState(true);

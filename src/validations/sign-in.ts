@@ -6,3 +6,5 @@ export const signInValidation = z
     password: z.string({ message: "need password" }),
   })
   .required();
+
+export type SignInType = z.infer<typeof signInValidation>;

@@ -1,5 +1,8 @@
 import User from "@/backend/db/models/user";
 import { UserCreateObject } from "../types/user";
+import { WalletService } from "./wallet";
+
+const { create: createWallet } = WalletService();
 
 export const UserService = () => {
   const findOne = async (param: Record<string, string>) => {
@@ -15,6 +18,13 @@ export const UserService = () => {
   const save = async (user: UserCreateObject) => {
     const newUser = create(user);
     const savedUser = await newUser.save();
+    if (savedUser) {
+      const newWallet = createWallet({
+        userId: savedUser._id,
+        totalBalance: 0,
+      });
+      await newWallet.save();
+    }
     return savedUser;
   };
 

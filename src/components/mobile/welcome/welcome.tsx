@@ -17,7 +17,8 @@ const WelcomeWrapper = () => {
         style={{
           backgroundImage: `url(${Bg.src})`,
           backgroundSize: "100% 100%",
-          backgroundPosition: "center center",
+          backgroundPosition: "top center",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <Image

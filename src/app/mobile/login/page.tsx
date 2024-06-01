@@ -41,52 +41,46 @@ const Login = () => {
           validationSchema={toFormikValidationSchema(signInValidation)}
           onSubmit={handleSubmit}
         >
-          {({ errors, touched }) => (
-            <Form>
-              <CardContent>
-                <div className="space-y-3.5">
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <FormField
-                      as={Input}
-                      name="email"
-                      type="text"
-                      id="email"
-                      placeholder="name@example.com"
-                      errors={errors}
-                      touched={touched}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="password">Password</Label>
-                    <FormField
-                      name="password"
-                      type="password"
-                      as={Input}
-                      id="password"
-                      errors={errors}
-                      touched={touched}
-                    />
-                  </div>
-                  <Button
-                    className="w-full"
-                    type="submit"
-                    variant="gooeyLeft"
-                    disabled={loading}
-                  >
-                    {loading ? <Loading /> : "Login"}
-                  </Button>
-
-                  <Label className="text-center w-full flex justify-center">
-                    Do not have an account?
-                    <Link href={Route.SIGNUP} className="text-primary ml-2">
-                      Signup
-                    </Link>
-                  </Label>
+          <Form>
+            <CardContent>
+              <div className="space-y-3.5">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <FormField
+                    as={Input}
+                    name="email"
+                    type="text"
+                    id="email"
+                    placeholder="name@example.com"
+                  />
                 </div>
-              </CardContent>
-            </Form>
-          )}
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <FormField
+                    name="password"
+                    type="password"
+                    as={Input}
+                    id="password"
+                  />
+                </div>
+                <Button
+                  className="w-full"
+                  type="submit"
+                  variant="gooeyLeft"
+                  disabled={loading}
+                >
+                  {loading ? <Loading /> : "Login"}
+                </Button>
+
+                <Label className="text-center w-full flex justify-center">
+                  Do not have an account?
+                  <Link href={Route.SIGNUP} className="text-primary ml-2">
+                    Signup
+                  </Link>
+                </Label>
+              </div>
+            </CardContent>
+          </Form>
         </Formik>
       </Card>
     </div>

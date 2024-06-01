@@ -1,10 +1,8 @@
 import * as React from "react";
-import { Field, FormikErrors, FormikTouched } from "formik";
+import { useField } from "formik";
 import { cn } from "@/lib/utils";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  errors: FormikErrors<any>;
-  touched: FormikTouched<any>;
   className?: string;
   name: string;
   as: React.ElementType;
@@ -15,30 +13,27 @@ const FormField: React.FC<InputProps> = ({
   name,
   className,
   type,
-  errors,
-  touched,
   ...props
-}) => (
-  <>
-    <Field
-      name={name}
-      render={({ field }: { field: any }) => (
-        <InputComponent
-          {...field}
-          type={type}
-          className={cn(
-            className,
-            errors[name] && touched[name] && "border-red-500"
-          )}
-          {...props}
-        />
+}) => {
+  const [field, meta] = useField(name);
+
+  return (
+    <>
+      <InputComponent
+        {...field}
+        type={type}
+        className={cn(
+          className,
+          meta.error && meta.touched && "border-red-500"
+        )}
+        {...props}
+      />
+      {meta.error && meta.touched && (
+        <p className="text-red-500 p-0 m-0">{String(meta.error)}</p>
       )}
-    />
-    {errors[name] && touched[name] && (
-      <p className="text-red-500 p-0 m-0">{String(errors[name])}</p>
-    )}
-  </>
-);
+    </>
+  );
+};
 
 FormField.displayName = "FormField";
 

@@ -49,7 +49,7 @@ const Login = () => {
                   <FormField
                     as={Input}
                     name="email"
-                    type="text"
+                    type="email"
                     id="email"
                     placeholder="name@example.com"
                   />

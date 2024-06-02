@@ -11,7 +11,7 @@ import {
 } from "@/constants/frontend/route";
 import { Route } from "./enums/route";
 
-const publicPath = [
+const publicPaths = [
   "/login",
   "/signup",
   "/welcome",
@@ -20,39 +20,43 @@ const publicPath = [
   "/mobile/welcome",
 ];
 
-const redirectToMobileHomePage = (req: NextRequest) => {
-  return NextResponse.redirect(new URL(MOBILE_HOME_PAGE, req.url));
-};
-
-const redirectToDesktopHomePage = (req: NextRequest) => {
-  return NextResponse.redirect(new URL(DESKTOP_HOME_PAGE, req.url));
-};
+const redirectTo = (url: string, req: NextRequest) =>
+  NextResponse.redirect(new URL(url, req.url));
 
 export default async function middleware(req: NextRequest) {
-  const userAgent = req.headers.get("user-agent");
-  const pathname = new URL(req.url).pathname;
+  const userAgent = req.headers.get("user-agent") ?? "";
+  const { pathname } = new URL(req.url);
 
-  if (req.nextUrl.pathname.startsWith("/_next")) {
+  if (pathname.startsWith("/_next")) {
     return NextResponse.next();
   }
 
-  const token = req.cookies.get("token")?.value || "";
-  const isPublicPath = publicPath.includes(pathname);
-
-  if (isPublicPath && token) {
-    if (isMobile(userAgent!)) {
-      return NextResponse.redirect(new URL("/mobile/home", req.url));
-    } else {
-      return NextResponse.redirect(new URL("/home", req.url));
-    }
-  }
+  const token = req.cookies.get("token")?.value ?? "";
+  const isPublicPath = publicPaths.includes(pathname);
+  const isUserMobile = isMobile(userAgent);
 
   if (!isAPIRoute(pathname)) {
-    if (isMobile(userAgent!) && !isMobileRoute(pathname)) {
-      return redirectToMobileHomePage(req);
-    } else if (!isMobile(userAgent!) && isMobileRoute(pathname)) {
-      return redirectToDesktopHomePage(req);
+    if (isUserMobile && !isMobileRoute(pathname)) {
+      return redirectTo(MOBILE_HOME_PAGE, req);
+    } else if (!isUserMobile && isMobileRoute(pathname)) {
+      return redirectTo(DESKTOP_HOME_PAGE, req);
     }
+  }
+  if (isPublicPath && token) {
+    const redirectPath = `/${
+      isUserMobile ? getMobileRoute(Route.HOME) : Route.HOME
+    }`;
+    return redirectTo(redirectPath, req);
+  }
+
+  if (!token && !isPublicPath && !isAPIRoute(pathname)) {
+    if (pathname === MOBILE_HOME_PAGE || pathname === DESKTOP_HOME_PAGE) {
+      return NextResponse.next();
+    }
+    const redirectPath = `/${
+      isUserMobile ? getMobileRoute(Route.LOGIN) : Route.LOGIN
+    }`;
+    return redirectTo(redirectPath, req);
   }
 
   return NextResponse.next();

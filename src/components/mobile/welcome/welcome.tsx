@@ -17,7 +17,8 @@ const WelcomeWrapper = () => {
         style={{
           backgroundImage: `url(${Bg.src})`,
           backgroundSize: "100% 100%",
-          backgroundPosition: "center center",
+          backgroundPosition: "top center",
+          backgroundRepeat: "no-repeat",
         }}
       >
         <Image
@@ -25,6 +26,7 @@ const WelcomeWrapper = () => {
           alt="background-person"
           className="w-[277px] relative top-8 left-[-17px]"
           quality={100}
+          priority
         />
       </div>
       <div className="flex justify-center mt-4">

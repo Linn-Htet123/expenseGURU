@@ -6,11 +6,14 @@ import {
 import { createValidation } from "@/validations/category/create";
 import { CategoryService } from "../services/category";
 import { NextRequest } from "next/server";
+import { chunkUrl } from "../helpers/chunk-url";
 
 const {
   existingCategory,
   save: saveCategory,
   getAll: getAllCategory,
+  findById: findCategoryById,
+  update: updateCategory,
 } = CategoryService();
 
 export const CategoryController = () => {
@@ -37,12 +40,7 @@ export const CategoryController = () => {
         return HttpBadRequestHandler(validatedResult);
       }
 
-      const userCategory = await existingCategory(userId, body.name);
-      if (userCategory.length > 0) {
-        return HttpBadRequestHandler("category already exists");
-      }
-
-      const savedCategory = await saveCategory({ ...body, userId });
+      await saveCategory({ ...body, userId });
 
       return HttpCreatedHandler({
         responseMessage: "Category created successfully",
@@ -54,26 +52,24 @@ export const CategoryController = () => {
   };
 
   const update = async (request: NextRequest) => {
-    // const { id } = request.query;
-    // console.log(request.query);
-    const url = await request.nextUrl;
-    const pathname = url.pathname;
-    const id = pathname.split("/").pop(); // Get the last segment of the pathname
-    console.log(id);
-    // console.log(url);
+    try {
+      const body = await request.json();
+      const validatedResult = validate(body, createValidation);
+      if (validatedResult) {
+        return HttpBadRequestHandler(validatedResult);
+      }
 
-    return HttpCreatedHandler({ message: "update" });
-    // try {
-    //   const userId = request.headers.get("userId")!;
-    //   const userCategory = await getAllCategory(userId);
-
-    //   return HttpCreatedHandler({
-    //     success: true,
-    //     data: userCategory,
-    //   });
-    // } catch (error: any) {
-    //   return HttpBadRequestHandler({ error: error.message });
-    // }
+      const id = await chunkUrl(request);
+      const userId = request.headers.get("userId")!;
+      const category = await findCategoryById(id);
+      await updateCategory(id, { ...body, userId });
+      return HttpCreatedHandler({
+        success: true,
+        message: "Category updated successfully",
+      });
+    } catch (error: any) {
+      return HttpBadRequestHandler({ error: error.message });
+    }
   };
 
   return { getAll, create, update };

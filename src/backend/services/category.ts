@@ -1,6 +1,12 @@
 import { User } from "lucide-react";
 import Category from "../db/models/category";
 import { userAgent } from "next/server";
+import {
+  HttpBadRequestHandler,
+  HttpNotFoundHandler,
+} from "../helpers/httpExceptionHandler";
+import mongoose from "mongoose";
+import { transformToObjectId } from "../helpers/helper";
 
 export const CategoryService = () => {
   const create = (category: any) => {
@@ -9,13 +15,20 @@ export const CategoryService = () => {
   };
 
   const save = async (category: any) => {
+    await existingCategory(category.userId, category.name);
     const newCategory = create(category);
     const savedCategory = await newCategory.save();
     return savedCategory;
   };
 
   const findById = async (id: string) => {
-    return await Category.findById(id);
+    let objectId = transformToObjectId(id, "category not found");
+
+    const category = await Category.findById(objectId);
+    if (!category) {
+      throw new Error("category not found");
+    }
+    return category;
   };
 
   const existingCategory = async (userId: string, categoryName: string) => {
@@ -23,7 +36,15 @@ export const CategoryService = () => {
       userId: { $in: [userId, null] },
       name: categoryName,
     });
-    return cats;
+    console.log(cats);
+    if (cats.length > 0) {
+      throw new Error("category already exists");
+    }
+  };
+
+  const update = async (id: string, body: Record<string, string>) => {
+    await existingCategory(body.userId, body.name);
+    await Category.findOneAndUpdate({ _id: id }, body);
   };
 
   const getAll = async (userId: string) => {
@@ -33,5 +54,11 @@ export const CategoryService = () => {
     return cats;
   };
 
-  return { create, existingCategory, findById, save, getAll };
+  return {
+    create,
+    findById,
+    save,
+    getAll,
+    update,
+  };
 };

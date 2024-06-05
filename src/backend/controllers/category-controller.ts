@@ -7,6 +7,7 @@ import { createValidation } from "@/validations/category/create";
 import { CategoryService } from "../services/category";
 import { NextRequest } from "next/server";
 import { chunkUrl } from "../helpers/chunk-url";
+import { getValidation } from "@/validations/category/get";
 
 const {
   save: saveCategory,
@@ -19,8 +20,17 @@ const {
 export const CategoryController = () => {
   const getAll = async (request: NextRequest) => {
     try {
+      const params = request.nextUrl.searchParams;
+      const page = params.get("page") ?? "1";
+      const limit = params.get("limit") ?? "10";
+
+      const validatedResult = validate({ page, limit }, getValidation);
+      if (validatedResult) {
+        return HttpBadRequestHandler(validatedResult);
+      }
+
       const userId = request.headers.get("userId")!;
-      const userCategory = await getAllCategory(userId);
+      const userCategory = await getAllCategory(userId, +page, +limit);
 
       return HttpCreatedHandler({
         success: true,

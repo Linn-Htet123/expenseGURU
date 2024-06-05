@@ -95,7 +95,6 @@ export const UserController = () => {
       return HttpCreatedHandler({
         responseMessage: "User created successfully",
         success: true,
-        data: userResponse,
       });
     } catch (error: any) {
       return HttpBadRequestHandler({ error: error.message });
@@ -104,7 +103,7 @@ export const UserController = () => {
 
   const authMe = async (request: NextRequest) => {
     try {
-      const _id = await request.headers.get("x-user-id")!;
+      const _id = await request.headers.get("userId")!;
 
       // Find the user in the database based on the user ID
       const user = await findOne({ _id });

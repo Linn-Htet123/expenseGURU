@@ -1,11 +1,4 @@
-import { User } from "lucide-react";
 import Category from "../db/models/category";
-import { userAgent } from "next/server";
-import {
-  HttpBadRequestHandler,
-  HttpNotFoundHandler,
-} from "../helpers/httpExceptionHandler";
-import mongoose from "mongoose";
 import { transformToObjectId } from "../helpers/helper";
 
 export const CategoryService = () => {
@@ -36,15 +29,18 @@ export const CategoryService = () => {
       userId: { $in: [userId, null] },
       name: categoryName,
     });
-    console.log(cats);
     if (cats.length > 0) {
       throw new Error("category already exists");
     }
   };
 
   const update = async (id: string, body: Record<string, string>) => {
-    await existingCategory(body.userId, body.name);
-    await Category.findOneAndUpdate({ _id: id }, body);
+    try {
+      await existingCategory(body.userId, body.name);
+      await Category.findOneAndUpdate({ _id: id }, body);
+    } catch (error: any) {
+      throw new Error(error);
+    }
   };
 
   const getAll = async (userId: string) => {
@@ -54,11 +50,25 @@ export const CategoryService = () => {
     return cats;
   };
 
+  const deleteCategory = async (id: string, body: Record<string, string>) => {
+    try {
+      const category = await findById(id);
+      const userId = transformToObjectId(body.userId, "user not found");
+      if (!category.userId && !userId.equals(category.userId)) {
+        throw new Error("can't delete other user's and system category");
+      }
+      await Category.findOneAndDelete({ _id: id });
+    } catch (error: any) {
+      throw new Error(error.message);
+    }
+  };
+
   return {
     create,
     findById,
     save,
     getAll,
     update,
+    deleteCategory,
   };
 };

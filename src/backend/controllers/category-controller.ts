@@ -9,11 +9,11 @@ import { NextRequest } from "next/server";
 import { chunkUrl } from "../helpers/chunk-url";
 
 const {
-  existingCategory,
   save: saveCategory,
   getAll: getAllCategory,
   findById: findCategoryById,
   update: updateCategory,
+  deleteCategory: deleteCategoryById,
 } = CategoryService();
 
 export const CategoryController = () => {
@@ -72,5 +72,19 @@ export const CategoryController = () => {
     }
   };
 
-  return { getAll, create, update };
+  const deleteCategory = async (request: NextRequest) => {
+    try {
+      const id = await chunkUrl(request);
+      const userId = request.headers.get("userId")!;
+      await deleteCategoryById(id, { userId });
+      return HttpCreatedHandler({
+        success: true,
+        message: "Category deleted successfully",
+      });
+    } catch (error: any) {
+      return HttpBadRequestHandler({ error: error.message });
+    }
+  };
+
+  return { getAll, create, update, deleteCategory };
 };

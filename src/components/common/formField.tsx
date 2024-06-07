@@ -29,7 +29,7 @@ const FormField: React.FC<InputProps> = ({
         {...props}
       />
       {meta.error && meta.touched && (
-        <p className="text-red-500 p-0 m-0">{String(meta.error)}</p>
+        <p className="text-red-500 p-0 m-0 text-xs">{String(meta.error)}</p>
       )}
     </>
   );

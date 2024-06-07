@@ -1,4 +1,5 @@
 import Footer from "@/components/mobile/footer";
+import Header from "@/components/mobile/header";
 
 export default function MobileLayout({
   children,
@@ -7,6 +8,7 @@ export default function MobileLayout({
 }) {
   return (
     <>
+      <Header />
       {children}
       <Footer />
     </>

@@ -22,11 +22,10 @@ const getGreet = (date: Dayjs): string => {
     return "Good morning";
   } else if (isAfternoon) {
     return "Good afternoon";
-  } else if (isEvening) {
-    return "Good evening";
+  } else if (isNight) {
+    return "Good night";
   }
-
-  return "Good night";
+  return "Good evening";
 };
 
 // Define the plugin

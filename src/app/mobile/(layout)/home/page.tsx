@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import HomeBg from "../../../../../public/home-bg.png";
 import IncomeArrow from "../../../../../public/income-arrow.png";
 import ExpenseArrow from "../../../../../public/expense-arrow.png";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -9,7 +8,15 @@ import { useLogin } from "@/hooks/useLogin";
 import Logout from "@/components/common/logout";
 import greetPlugin from "@/utils/frontend/date";
 import dayjs from "dayjs";
+import Greeting from "@/components/common/greeting";
+import dynamic from "next/dynamic";
 
+const WithBackground = dynamic(
+  () => import("@/components/common/withBackground"),
+  {
+    ssr: false,
+  }
+);
 const HomePage = () => {
   dayjs.extend(greetPlugin);
   const { user, getLoggedInUserData } = useLogin();
@@ -18,18 +25,10 @@ const HomePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
-    <div
-      className="h-dvh flex flex-col gap-2 py-4"
-      style={{
-        backgroundImage: `url(${HomeBg.src})`,
-        backgroundRepeat: "no-repeat",
-        backgroundSize: "contain",
-        backgroundPosition: "top center",
-      }}
-    >
+    <WithBackground>
       <div className="flex justify-between text-white py-2 px-4">
         <div>
-          <div className="text-sm">{dayjs.greet()}</div>
+          <Greeting className="text-sm" />
           <div className="text-xl font-semibold">{user.username}</div>
         </div>
         <div>
@@ -102,7 +101,7 @@ const HomePage = () => {
           </div>
         </ScrollArea>
       </div>
-    </div>
+    </WithBackground>
   );
 };
 

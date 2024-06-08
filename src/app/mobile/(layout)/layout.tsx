@@ -7,10 +7,10 @@ export default function MobileLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <Header />
-      {children}
+      <div className="flex-1 overflow-auto">{children}</div>
       <Footer />
-    </>
+    </div>
   );
 }

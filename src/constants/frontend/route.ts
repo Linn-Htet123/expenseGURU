@@ -4,7 +4,7 @@ import HomeActive from "../../../public/footerIcon/home-active.svg";
 import BarChart from "../../../public/footerIcon/bar-chart.svg";
 import BarChartActive from "../../../public/footerIcon/bar-chart-active.svg";
 import Wallet from "../../../public/footerIcon/wallet.svg";
-import WalletActive from "../../../public/footerIcon/wallet.svg";
+import WalletActive from "../../../public/footerIcon/wallet-active.svg";
 import User from "../../../public/footerIcon/user.svg";
 import UserActive from "../../../public/footerIcon/user-active.svg";
 import AddIcon from "../../../public/footerIcon/add-icon.svg";

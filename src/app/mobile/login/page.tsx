@@ -2,7 +2,7 @@
 import Bg from "../../../../public/welcome-bg.png";
 import { CardTitle, CardHeader, CardContent, Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input"; // Ensure this points to the correct file
+import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Route } from "@/enums/route";

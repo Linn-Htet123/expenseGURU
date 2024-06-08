@@ -4,10 +4,11 @@ import { MOBILE_FOOTER } from "@/constants/frontend/route";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { getMobileRoute } from "@/utils/frontend/route";
+
 const Footer = () => {
   const pathname = usePathname();
   return (
-    <div className="fixed bottom-0 left-0 w-full h-16 px-4">
+    <div className="fixed bottom-0 left-0 w-full h-16 px-4 bg-white border-t border-gray-300 z-50">
       <div className="flex justify-around items-center h-full gap-4">
         {MOBILE_FOOTER.map((footer) => (
           <Link
@@ -29,6 +30,7 @@ const Footer = () => {
                     ? footer.activeIcon
                     : footer.icon
                 }
+                className="w-[40px] h-[29px]"
                 alt={`${footer.name}`}
               />
             </div>
@@ -38,4 +40,5 @@ const Footer = () => {
     </div>
   );
 };
+
 export default Footer;

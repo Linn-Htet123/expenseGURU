@@ -2,7 +2,6 @@
 import ProfileHead from "@/components/common/profileHead";
 import Image from "next/image";
 import Bg from "../../../../../public/home-bg.png";
-import Logout from "@/components/common/logout";
 import { ExitIcon } from "@radix-ui/react-icons";
 import { useLogout } from "@/hooks/useLogout";
 

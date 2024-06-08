@@ -1,28 +1,32 @@
 "use client";
 import React, { useState } from "react";
 
-const SegmentedControl = () => {
-  const [selected, setSelected] = useState("Income");
+interface Props {
+  data: string[];
+  onSelectionChange: (item: string) => void;
+}
+const SegmentedControl = ({ data, onSelectionChange }: Props) => {
+  const [selected, setSelected] = useState(data[0]);
+
+  const handleClick = (item: string) => {
+    setSelected(item);
+    onSelectionChange(item);
+  };
 
   return (
-    <div className="my-4 w-full">
-      <div className="inline-flex w-full rounded-full border border-gray-300 bg-gray-100 p-1">
-        <button
-          className={`px-4 py-2 rounded-full focus:outline-none transition-all duration-300 ${
-            selected === "Income" ? "bg-white shadow" : ""
-          }`}
-          onClick={() => setSelected("Income")}
-        >
-          Income
-        </button>
-        <button
-          className={`px-4 py-2 rounded-full focus:outline-none transition-all duration-300 ${
-            selected === "Expense" ? "bg-white shadow" : ""
-          }`}
-          onClick={() => setSelected("Expense")}
-        >
-          Expense
-        </button>
+    <div className="my-4 w-full font-semibold">
+      <div className="inline-flex w-full rounded-full bg-gray-100 p-1">
+        {data.map((item, index) => (
+          <button
+            key={index}
+            className={`px-4 py-2 rounded-full w-full transition-all duration-300 ${
+              selected === item ? "bg-white shadow" : ""
+            }`}
+            onClick={() => handleClick(item)}
+          >
+            {item}
+          </button>
+        ))}
       </div>
     </div>
   );

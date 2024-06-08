@@ -18,13 +18,13 @@ const Footer = () => {
           >
             <div
               className={`${
-                footer.name === "add-income" &&
+                footer.name === "add" &&
                 "rounded-full bg-[#2f7e79] w-[68px] h-[68px] flex items-center justify-center relative bottom-6"
               }`}
             >
               <Image
                 src={
-                  footer.name === "add-income"
+                  footer.name === "add"
                     ? footer.icon
                     : pathname === "/" + getMobileRoute(footer.route)
                     ? footer.activeIcon

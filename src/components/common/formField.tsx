@@ -6,6 +6,7 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   name: string;
   options?: string[];
+  isMoneyInput?: boolean;
   as: React.ElementType;
 }
 
@@ -15,6 +16,7 @@ const FormField: React.FC<InputProps> = ({
   className,
   options,
   type,
+  isMoneyInput = false,
   ...props
 }) => {
   const [field, meta] = useField(name);
@@ -25,6 +27,7 @@ const FormField: React.FC<InputProps> = ({
       <InputComponent
         {...field}
         {...props}
+        isMoneyInput={isMoneyInput}
         options={options}
         type={type}
         className={cn(

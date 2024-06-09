@@ -1,22 +1,17 @@
 import { z } from "zod";
-
-export const ExpenseValidation = z
+export const TransactionValidation = z
   .object({
-    category: z.string({ message: "category is required" }),
+    category: z.string({ message: "Category must not be empty." }),
     amount: z
-      .number({ message: "amount is required" })
-      .min(1, "minimum amount is 1"),
+      .string({ message: "Amount must not be empty." })
+      .refine((val) => /^[1-9][0-9,]*$/.test(val.replace(/,/g, "")), {
+        message: "Amount must not start with 0 and must be a valid number.",
+      })
+      .refine(
+        (val) => Number(val.replace(/,/g, "")) >= 1,
+        "Amount must be at leat 1."
+      ),
   })
   .required();
 
-export type ExpenseType = z.infer<typeof ExpenseValidation>;
-
-export const IncomeValidation = z
-  .object({
-    amount: z
-      .number({ message: "amount is required" })
-      .min(1, "minimum amount is 1"),
-  })
-  .required();
-
-export type IncomeType = z.infer<typeof IncomeValidation>;
+export type TransactionType = z.infer<typeof TransactionValidation>;

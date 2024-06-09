@@ -10,9 +10,15 @@ import {
 
 interface SelectBoxProps extends FieldProps {
   options: string[];
+  placeholder?: string;
 }
 
-const SelectBox = ({ options, field, form }: SelectBoxProps) => {
+const SelectBox = ({
+  options,
+  field,
+  form,
+  placeholder = "Select ...",
+}: SelectBoxProps) => {
   const [selectValue, setSelectValue] = useState(field.value || "");
 
   useEffect(() => {
@@ -34,7 +40,7 @@ const SelectBox = ({ options, field, form }: SelectBoxProps) => {
       <SelectTrigger
         className={`w-full ${error && touched ? "border-red-500" : ""}`}
       >
-        <SelectValue placeholder={selectValue || "Select Category..."} />
+        <SelectValue placeholder={selectValue || placeholder} />
       </SelectTrigger>
       <SelectContent>
         {options.map((option, index) => (

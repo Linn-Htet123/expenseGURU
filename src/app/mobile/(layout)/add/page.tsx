@@ -5,21 +5,22 @@ import { Button } from "@/components/ui/button";
 import SegmentedControl from "@/components/ui/segmented-button";
 import { Label } from "@/components/ui/label";
 import { Form, Formik } from "formik";
-import {
-  IncomeType,
-  IncomeValidation,
-  ExpenseType,
-  ExpenseValidation,
-} from "@/validations/income-expense";
+import { TransactionValidation } from "@/validations/income-expense";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { FormField } from "@/components/common/formField";
 import { Input } from "@/components/ui/input";
 import SelectBox from "@/components/common/select";
+import { TransactionTab } from "@/enums/transactionTab";
+import { useTransaction } from "@/hooks/useTransaction";
 
 const Add = () => {
-  const handleExpenseSubmit = (values: ExpenseType) => {
-    // values.category = selectValue;
-    console.log(values);
+  const { handleTabChange, handleSubmit, currentTab, currentParams } =
+    useTransaction();
+
+  const getButtonText = () => {
+    return currentParams === TransactionTab.EXPENSE
+      ? TransactionTab.EXPENSE
+      : TransactionTab.INCOME;
   };
   return (
     <div className="pt-10 flex flex-col items-center justify-center">
@@ -27,18 +28,17 @@ const Add = () => {
         <Image src={Bg} alt="background image" className="w-screen" />
         <div className="relative bottom-[100px] w-[90%] py-5 px-3 mx-auto shadow-md rounded-3xl bg-white">
           <SegmentedControl
-            data={["Income", "Expense"]}
-            onSelectionChange={(item) => {
-              console.log(item);
-            }}
+            currentTab={currentTab}
+            data={[TransactionTab.INCOME, TransactionTab.EXPENSE]}
+            onSelectionChange={handleTabChange}
           />
           <Formik
             initialValues={{
               category: "",
-              amount: 0,
+              amount: "",
             }}
-            validationSchema={toFormikValidationSchema(ExpenseValidation)}
-            onSubmit={handleExpenseSubmit}
+            validationSchema={toFormikValidationSchema(TransactionValidation)}
+            onSubmit={handleSubmit}
           >
             <Form>
               <div className="px-4 mt-4 w-full flex flex-col gap-3">
@@ -50,6 +50,7 @@ const Add = () => {
                   name="category"
                   type="category"
                   id="category"
+                  placeholder="Select Category ..."
                   options={["School", "Gym", "Netflix"]}
                 />
               </div>
@@ -60,14 +61,15 @@ const Add = () => {
                 <FormField
                   as={Input}
                   name="amount"
-                  type="number"
+                  type="text"
                   id="amount"
+                  isMoneyInput={true}
                   defaultValue={1000}
                   placeholder="4,000"
                 />
               </div>
               <div className="px-4 mt-4 w-full flex flex-col gap-3">
-                <Button type="submit">Add Expense</Button>
+                <Button type="submit">Add {getButtonText()}</Button>
               </div>
             </Form>
           </Formik>

@@ -3,16 +3,29 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { EyeOpenIcon, EyeClosedIcon } from "@radix-ui/react-icons";
 import styles from "./input.module.scss";
+import { formatMoney } from "@/utils/frontend/money";
 export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+  extends React.InputHTMLAttributes<HTMLInputElement> {
+  isMoneyInput?: boolean;
+}
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+  ({ className, type, isMoneyInput, onChange, ...props }, ref) => {
     const [showPassword, setShowPassword] = React.useState(false);
     const isPassword = type === "password";
 
     const togglePasswordVisibility = () => {
       setShowPassword((prev) => !prev);
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (isMoneyInput) {
+        const formattedValue = formatMoney(event.target.value);
+        event.target.value = formattedValue;
+      }
+      if (onChange) {
+        onChange(event);
+      }
     };
 
     return (
@@ -27,6 +40,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             styles.input
           )}
           ref={ref}
+          onChange={isMoneyInput ? handleChange : onChange}
           {...props}
         />
         {isPassword && (

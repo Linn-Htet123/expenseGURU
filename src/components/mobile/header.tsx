@@ -6,7 +6,7 @@ const header = new Map([
   ["/mobile/profile", "Profile"],
   ["/mobile/statistic", "Statistic"],
   ["/mobile/wallet", "Wallet"],
-  ["/mobile/add-income", "Income"],
+  ["/mobile/add", "Create"],
 ]);
 
 const Header = () => {

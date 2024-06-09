@@ -3,10 +3,12 @@ import React, { useState } from "react";
 
 interface Props {
   data: string[];
+  currentTab: string;
   onSelectionChange: (item: string) => void;
 }
-const SegmentedControl = ({ data, onSelectionChange }: Props) => {
-  const [selected, setSelected] = useState(data[0]);
+
+const SegmentedControl = ({ data, currentTab, onSelectionChange }: Props) => {
+  const [selected, setSelected] = useState(currentTab || data[0]);
 
   const handleClick = (item: string) => {
     setSelected(item);

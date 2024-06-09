@@ -30,6 +30,7 @@ const Wallet = () => {
           </div>
           <div className="flex justify-between w-full items-center flex-col">
             <SegmentedControl
+              currentTab="Income"
               data={["Income", "Expense"]}
               onSelectionChange={(item) => {
                 console.log(item);

@@ -12,8 +12,8 @@ const Wallet = () => {
   const { handleTabChange, currentTab, currentParams } = useTab();
 
   return (
-    <div className="w-full h-full flex flex-col">
-      <WithSuspense>
+    <WithSuspense>
+      <div className="w-full h-full flex flex-col">
         <div className="relative w-full flex-1 z-10 flex flex-col items-center justify-start">
           <Image src={Bg} alt="background" className="w-screen" />
           <div className="h-[90%] w-full  bg-slate-50 absolute bottom-0 rounded-t-[30px] px-4 py-5 flex flex-col items-center justify-start">
@@ -45,8 +45,8 @@ const Wallet = () => {
             </div>
           </div>
         </div>
-      </WithSuspense>
-    </div>
+      </div>
+    </WithSuspense>
   );
 };
 

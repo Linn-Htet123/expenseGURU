@@ -14,6 +14,7 @@ import SelectBox from "@/components/common/select";
 import { TransactionTab } from "@/enums/transactionTab";
 import { useTransaction } from "@/hooks/useTransaction";
 import { Loading } from "@/components/common/loading";
+import { useTab } from "@/hooks/useTab";
 
 const Add = () => {
   return (
@@ -37,8 +38,8 @@ const Add = () => {
 };
 
 const TransactionForm = () => {
-  const { handleTabChange, handleSubmit, currentTab, currentParams } =
-    useTransaction();
+  const { handleSubmit } = useTransaction();
+  const { handleTabChange, currentTab, currentParams } = useTab();
 
   const getButtonText = () => {
     return currentParams === TransactionTab.EXPENSE

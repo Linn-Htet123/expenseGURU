@@ -15,6 +15,7 @@ import { TransactionTab } from "@/enums/transactionTab";
 import { useTransaction } from "@/hooks/useTransaction";
 import { Loading } from "@/components/common/loading";
 import { useTab } from "@/hooks/useTab";
+import WithSuspense from "@/components/common/withSuspense";
 
 const Add = () => {
   return (
@@ -22,15 +23,9 @@ const Add = () => {
       <div className="absolute top-0 left-0 h-auto">
         <Image src={Bg} alt="background image" className="w-screen" />
         <div className="relative bottom-[100px] w-[90%] py-5 px-3 mx-auto shadow-md rounded-3xl bg-white">
-          <Suspense
-            fallback={
-              <div className="h-dvh w-full flex flex-col justify-center items-center">
-                <Loading />
-              </div>
-            }
-          >
+          <WithSuspense>
             <TransactionForm />
-          </Suspense>
+          </WithSuspense>
         </div>
       </div>
     </div>

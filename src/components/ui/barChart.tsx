@@ -9,6 +9,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
 } from "chart.js";
 
 ChartJS.register(
@@ -41,7 +42,7 @@ const BarChart = () => {
     ],
   };
 
-  const options = {
+  const options: ChartOptions<"bar"> = {
     responsive: true,
     plugins: {
       legend: {

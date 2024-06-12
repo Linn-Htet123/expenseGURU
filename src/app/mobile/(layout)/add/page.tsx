@@ -76,7 +76,6 @@ const TransactionForm = () => {
             <FormField
               as={SelectBox}
               name="category"
-              type="category"
               id="category"
               placeholder="Select Category ..."
               options={["School", "Gym", "Netflix"]}

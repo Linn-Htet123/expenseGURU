@@ -52,9 +52,12 @@ export const CategoryService = () => {
     const skip = (page - 1) * limit;
 
     // Find the categories with pagination
-    const cats = await Category.find({
-      userId: { $in: [userId, null] },
-    })
+    const cats = await Category.find(
+      {
+        userId: { $in: [userId, null] },
+      },
+      { __v: 0 }
+    )
       .skip(skip)
       .limit(limit);
 

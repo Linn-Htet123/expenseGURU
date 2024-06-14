@@ -8,6 +8,8 @@ import ExpenseArrow from "../../../../../public/expense-arrow.png";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTab } from "@/hooks/useTab";
 import WithSuspense from "@/components/common/withSuspense";
+import Link from "next/link";
+import { Route } from "@/enums/route";
 const Wallet = () => {
   return (
     <div className="w-full h-full flex flex-col">
@@ -31,13 +33,13 @@ const WalletList = () => {
         <Button>
           <span className="flex gap-2 items-center">
             <Image src={IncomeArrow} alt="income" />
-            <span>Income</span>
+            <Link href={Route.ADD + "?tab=Income"}>Income</Link>
           </span>
         </Button>
         <Button>
           <span className="flex gap-2 items-center">
             <Image src={ExpenseArrow} alt="expense" />
-            <span>Expense</span>
+            <Link href={Route.ADD + "?tab=Expense"}>Expense</Link>
           </span>
         </Button>
       </div>

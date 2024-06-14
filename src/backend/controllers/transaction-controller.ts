@@ -28,8 +28,13 @@ export const TransactionController = () => {
       const params = request.nextUrl.searchParams;
       const page = params.get("page") ?? "1";
       const limit = params.get("limit") ?? "10";
+      const type = params.get("type") ?? null;
+      const date = params.get("date") ?? null;
 
-      const validatedResult = validate({ page, limit }, getValidation);
+      const validatedResult = validate(
+        { page, limit, type, date },
+        getValidation
+      );
       console.log("validatedResult", validatedResult);
       if (validatedResult) {
         return HttpBadRequestHandler(validatedResult);
@@ -40,7 +45,9 @@ export const TransactionController = () => {
       const userTransaction = await getAllTransaction(
         wallet._id,
         +page,
-        +limit
+        +limit,
+        type,
+        date
       );
 
       return HttpCreatedHandler({

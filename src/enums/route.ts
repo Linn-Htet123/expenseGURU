@@ -8,4 +8,5 @@ export enum Route {
   WALLET = "wallet",
   PROFILE = "profile",
   ADD = "add",
+  CATEGORY = "category",
 }

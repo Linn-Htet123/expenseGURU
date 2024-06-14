@@ -2,8 +2,10 @@
 import ProfileHead from "@/components/common/profileHead";
 import Image from "next/image";
 import Bg from "../../../../../public/home-bg.png";
-import { ExitIcon } from "@radix-ui/react-icons";
+import { ExitIcon, StackIcon } from "@radix-ui/react-icons";
 import { useLogout } from "@/hooks/useLogout";
+import Link from "next/link";
+import { Route } from "@/enums/route";
 
 const Profile = () => {
   const { logout } = useLogout();
@@ -17,15 +19,24 @@ const Profile = () => {
         <Image src={Bg} alt="background image" className="w-screen" />
         <div className="relative bottom-[80px]">
           <ProfileHead />
-          <div className="px-4 mt-4 w-full">
+          <div className="px-4 mt-4 w-full font-medium">
+            <Link
+              href={Route.CATEGORY}
+              className="flex items-center w-full py-4 gap-6"
+            >
+              <div>
+                <StackIcon width={30} />
+              </div>
+              <div>Category</div>
+            </Link>
             <div
-              className="flex items-center justify-between w-full py-4"
+              className="flex items-center w-full py-4 gap-6 text-red-700"
               onClick={handleLogout}
             >
-              <div>Logout</div>
               <div>
                 <ExitIcon width={30} />
               </div>
+              <div>Logout</div>
             </div>
           </div>
         </div>

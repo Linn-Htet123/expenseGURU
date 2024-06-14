@@ -1,5 +1,5 @@
 "use client";
-import React, { Suspense } from "react";
+import React from "react";
 import Image from "next/image";
 import Bg from "../../../../../public/home-bg.png";
 import { Button } from "@/components/ui/button";
@@ -13,9 +13,11 @@ import { Input } from "@/components/ui/input";
 import SelectBox from "@/components/common/select";
 import { TransactionTab } from "@/enums/transactionTab";
 import { useTransaction } from "@/hooks/useTransaction";
-import { Loading } from "@/components/common/loading";
 import { useTab } from "@/hooks/useTab";
 import WithSuspense from "@/components/common/withSuspense";
+import AddIcon from "../../../../../public/footerIcon/add-icon.svg";
+import Link from "next/link";
+import { Route } from "@/enums/route";
 
 const Add = () => {
   return (
@@ -59,13 +61,21 @@ const TransactionForm = () => {
       >
         <Form>
           <div className="px-4 mt-4 w-full flex flex-col gap-3">
-            <Label htmlFor="category">
-              <span>Category</span>
-            </Label>
+            <span className="flex justify-between items-center">
+              <Label htmlFor="category">
+                <span>Category</span>
+              </Label>
+              <Link
+                href={Route.CATEGORY}
+                className="p-1 rounded-full bg-[#2f7e79] w-[23px]"
+              >
+                <Image src={AddIcon} alt="add icon" />
+              </Link>
+            </span>
+
             <FormField
               as={SelectBox}
               name="category"
-              type="category"
               id="category"
               placeholder="Select Category ..."
               options={["School", "Gym", "Netflix"]}

@@ -1,5 +1,11 @@
+import BarChart from "@/components/ui/barChart";
+
 const Statistic = () => {
-  return <div>Helo worldd</div>;
+  return (
+    <div className="px-4 mx-auto">
+      <BarChart />
+    </div>
+  );
 };
 
 export default Statistic;

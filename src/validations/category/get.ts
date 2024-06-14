@@ -11,4 +11,5 @@ export const getValidation = z.object({
     .regex(/^\d+$/, "can't add negative value or character")
     .nullable()
     .optional(),
+  search: z.string().nullable().optional(),
 });

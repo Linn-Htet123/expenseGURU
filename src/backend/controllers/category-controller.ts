@@ -23,14 +23,15 @@ export const CategoryController = () => {
       const params = request.nextUrl.searchParams;
       const page = params.get("page") ?? "1";
       const limit = params.get("limit") ?? "10";
+      const search = params.get("search") ?? null;
 
-      const validatedResult = validate({ page, limit }, getValidation);
+      const validatedResult = validate({ page, limit, search }, getValidation);
       if (validatedResult) {
         return HttpBadRequestHandler(validatedResult);
       }
 
       const userId = request.headers.get("userId")!;
-      const userCategory = await getAllCategory(userId, +page, +limit);
+      const userCategory = await getAllCategory(userId, +page, +limit, search);
 
       return HttpCreatedHandler({
         success: true,

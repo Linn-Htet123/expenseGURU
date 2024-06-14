@@ -11,7 +11,12 @@ const {
 const { findById: findCategoryById } = CategoryService();
 
 export const TransactionService = () => {
-  const getAll = async (walletId: string, page = 1, limit = 10) => {
+  const getAll = async (
+    walletId: string,
+    page = 1,
+    limit = 10,
+    type: string | null = null
+  ) => {
     // Ensure page and limit are numbers and have valid values
     page = Math.max(1, +page);
     limit = Math.max(1, +limit);
@@ -19,8 +24,15 @@ export const TransactionService = () => {
     // Calculate the number of documents to skip
     const skip = (page - 1) * limit;
 
+    const filter: Record<string, string> = {
+      walletId,
+    };
+    if (type) {
+      filter.type = type;
+    }
+
     // Find the categories with pagination
-    const cats = await Transaction.find({ walletId }, { __v: 0 })
+    const cats = await Transaction.find(filter, { __v: 0 })
       .populate({
         path: "category",
         select: "name -_id",
@@ -29,7 +41,7 @@ export const TransactionService = () => {
       .limit(limit);
 
     // Optionally: Get the total count of matching documents for pagination metadata
-    const totalDocs = await Transaction.countDocuments({ walletId });
+    const totalDocs = await Transaction.countDocuments(filter);
 
     // Calculate total pages
     const totalPages = Math.ceil(totalDocs / limit);

@@ -10,15 +10,7 @@ import Logout from "@/components/common/logout";
 import greetPlugin from "@/utils/frontend/date";
 import dayjs from "dayjs";
 import Greeting from "@/components/common/greeting";
-import dynamic from "next/dynamic";
-import WithSuspense from "@/components/common/withSuspense";
 
-const WithBackground = dynamic(
-  () => import("@/components/common/withBackground"),
-  {
-    ssr: false,
-  }
-);
 const HomePage = () => {
   dayjs.extend(greetPlugin);
   const { user, getLoggedInUserData } = useLogin();
@@ -26,46 +18,64 @@ const HomePage = () => {
     getLoggedInUserData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const generateRandomData = () => {
+    const categories = ["Movies", "Shopping", "Dining", "Travel", "Utilities"];
+    const amounts = [-200, -400, -600, -800, -1000];
+    const dates = [
+      "May 3, 2024",
+      "June 10, 2024",
+      "July 15, 2024",
+      "August 20, 2024",
+      "September 25, 2024",
+    ];
+
+    return Array.from({ length: 10 }, () => ({
+      category: categories[Math.floor(Math.random() * categories.length)],
+      amount: amounts[Math.floor(Math.random() * amounts.length)],
+      date: dates[Math.floor(Math.random() * dates.length)],
+    }));
+  };
+  const data = generateRandomData();
   return (
     <>
-      <div className="w-full h-full flex flex-col">
-        <div className="relative w-full flex-1 z-10 flex flex-col items-center justify-start">
-          <Image src={Bg} alt="background" className="w-screen" />
-          <WithSuspense>
-            <div className="flex flex-col h-full w-full mx-4 absolute bottom-0">
-              <div className="flex justify-between text-white py-4 mb-2 px-4">
-                <div>
-                  <Greeting className="text-sm" />
-                  <div className="text-xl font-semibold">{user.username}</div>
-                </div>
-                <div>
-                  <Logout />
-                </div>
-              </div>
+      <div className="flex flex-col items-center justify-center h-dvh overflow-hidden">
+        <div className="flex justify-between text-white p-4 absolute top-2 left-0 w-full z-50">
+          <div>
+            <Greeting className="text-sm" />
+            <div className="text-xl font-semibold">{user.username}</div>
+          </div>
+          <div>
+            <Logout />
+          </div>
+        </div>
+        <div className="absolute top-0 left-0 h-full">
+          <Image src={Bg} alt="background image" className="w-screen" />
+          <div className="relative bottom-[170px]  w-full flex flex-col h-full">
+            <div className="mb-4">
               <HomeCard />
-              <div className="my-3 flex flex-col grow bg-red-100">
-                <span className="text-lg font-medium text-slate-500 px-4">
-                  Transaction History
-                </span>
-                <ScrollArea className="w-full h-full  bg-blue-50 px-4">
-                  <div className="flex justify-between items-center border-b border-slate-100 my-1">
-                    <div className="flex flex-col py-2">
-                      <div className="font-medium text-md">Movies</div>
-                      <div className="text-sm text-slate-400">May, 3 2024</div>
-                    </div>
-                    <div className="text-red-700 font-semibold"> - 400</div>
-                  </div>
-                  <div className="flex justify-between items-center border-b border-slate-100 my-1">
-                    <div className="flex flex-col py-2">
-                      <div className="font-medium text-md">Movies</div>
-                      <div className="text-sm text-slate-400">May, 3 2024</div>
-                    </div>
-                    <div className="text-red-700 font-semibold"> - 400</div>
-                  </div>
-                </ScrollArea>
-              </div>
             </div>
-          </WithSuspense>
+            <div className="grow">
+              <span className="text-lg font-medium text-slate-500 px-4">
+                Transaction History
+              </span>
+              <ScrollArea className="w-full h-[90%] px-4">
+                {data.map((item, index) => (
+                  <div
+                    key={index + item.category.length}
+                    className="flex justify-between items-center border-b border-slate-100 my-1"
+                  >
+                    <div className="flex flex-col py-2">
+                      <div className="font-medium text-md">{item.category}</div>
+                      <div className="text-sm text-slate-400">{item.date}</div>
+                    </div>
+                    <div className="text-red-700 font-semibold">
+                      {item.amount}
+                    </div>
+                  </div>
+                ))}
+              </ScrollArea>
+            </div>
+          </div>
         </div>
       </div>
     </>
@@ -74,8 +84,8 @@ const HomePage = () => {
 
 const HomeCard = () => {
   return (
-    <div className="flex justify-center px-4">
-      <div className="w-[360px] h-[180px] bg-[#2f7e79] flex flex-col justify-between rounded-2xl shadow-lg shadow-[#2f7e79] p-4 text-white">
+    <div className="flex w-full justify-center px-4">
+      <div className="w-full h-[180px] bg-[#2f7e79] flex flex-col justify-between rounded-2xl shadow-lg shadow-[#2f7e79] p-4 text-white">
         <div className="flex flex-col mb-5">
           <span className="text-sm">Total balance</span>
           <span className="text-3xl font-semibold">4,000</span>

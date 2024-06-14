@@ -29,8 +29,12 @@ export const TransactionController = () => {
       const page = params.get("page") ?? "1";
       const limit = params.get("limit") ?? "10";
       const type = params.get("type") ?? null;
+      const date = params.get("date") ?? null;
 
-      const validatedResult = validate({ page, limit, type }, getValidation);
+      const validatedResult = validate(
+        { page, limit, type, date },
+        getValidation
+      );
       console.log("validatedResult", validatedResult);
       if (validatedResult) {
         return HttpBadRequestHandler(validatedResult);
@@ -42,7 +46,8 @@ export const TransactionController = () => {
         wallet._id,
         +page,
         +limit,
-        type
+        type,
+        date
       );
 
       return HttpCreatedHandler({

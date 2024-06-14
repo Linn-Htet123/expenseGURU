@@ -15,7 +15,8 @@ export const TransactionService = () => {
     walletId: string,
     page = 1,
     limit = 10,
-    type: string | null = null
+    type: string | null = null,
+    date: string | null = null
   ) => {
     // Ensure page and limit are numbers and have valid values
     page = Math.max(1, +page);
@@ -31,8 +32,26 @@ export const TransactionService = () => {
       filter.type = type;
     }
 
+    let dateFilter = {};
+    if (date) {
+      const dateObj = new Date(date);
+      const startOfDay = new Date(dateObj.setHours(0, 0, 0, 0)).toISOString();
+      const endOfDay = new Date(
+        dateObj.setHours(23, 59, 59, 999)
+      ).toISOString();
+      dateFilter = {
+        createdAt: {
+          $gte: startOfDay,
+          $lt: endOfDay,
+        },
+      };
+    }
+
     // Find the categories with pagination
-    const cats = await Transaction.find(filter, { __v: 0 })
+    const cats = await Transaction.find(
+      { ...filter, ...dateFilter },
+      { __v: 0 }
+    )
       .populate({
         path: "category",
         select: "name -_id",
@@ -41,7 +60,10 @@ export const TransactionService = () => {
       .limit(limit);
 
     // Optionally: Get the total count of matching documents for pagination metadata
-    const totalDocs = await Transaction.countDocuments(filter);
+    const totalDocs = await Transaction.countDocuments({
+      ...filter,
+      ...dateFilter,
+    });
 
     // Calculate total pages
     const totalPages = Math.ceil(totalDocs / limit);

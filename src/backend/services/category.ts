@@ -47,7 +47,7 @@ export const CategoryService = () => {
     userId: string,
     page = 1,
     limit = 10,
-    search = null
+    search: string | null = null
   ) => {
     // Ensure page and limit are numbers and have valid values
     page = Math.max(1, +page);

@@ -26,6 +26,8 @@ import { Input } from "@/components/ui/input";
 import { CategoryType, createValidation } from "@/validations/category/create";
 import { Label } from "@/components/ui/label";
 import DeleteModal from "@/components/common/deleteModal";
+import { useCategory } from "@/hooks/useCategory";
+import ListSkeleton from "@/components/common/listSkeleton";
 
 const Category = () => {
   return (
@@ -99,107 +101,61 @@ const CategoryDialogBox = ({
 };
 
 const CategoryList = () => {
-  const categories = [
-    {
-      id: 1,
-      name: "Groceries",
-      type: "expense",
-    },
-    {
-      id: 2,
-      name: "Rent",
-      type: "expense",
-    },
-    {
-      id: 3,
-      name: "Utilities",
-      type: "expense",
-    },
-    {
-      id: 4,
-      name: "Entertainment",
-      type: "expense",
-    },
-    {
-      id: 5,
-      name: "Transportation",
-      type: "expense",
-    },
-    {
-      id: 6,
-      name: "Healthcare",
-      type: "expense",
-    },
-    {
-      id: 7,
-      name: "Dining Out",
-      type: "expense",
-    },
-    {
-      id: 8,
-      name: "Education",
-      type: "expense",
-    },
-    {
-      id: 9,
-      name: "Insurance",
-      type: "expense",
-    },
-    {
-      id: 10,
-      name: "Savings",
-      type: "income",
-    },
-  ];
+  const { categories } = useCategory();
+
   return (
     <div className="h-[92%] w-full bg-slate-50 absolute bottom-0 rounded-t-[30px] px-4 py-5 flex flex-col items-center justify-start">
       <div className="flex justify-center w-[90%]">
         <CategoryDialogBox trigger={<Button>Add Category</Button>} />
       </div>
       <ScrollArea className="grow w-full mt-5 pb-14">
-        {categories.slice(0, 10).map((category) => (
-          <Card key={category.id} className="w-full mb-3">
-            <CardContent className="flex justify-between items-center p-3">
-              <p className="font-medium">{category.name}</p>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <button>
-                    <DotsVerticalIcon fontSize={30} />
-                  </button>
-                </PopoverTrigger>
-                <PopoverContent className="w-24 mr-4 py-2 px-2">
-                  <div>
-                    <DeleteModal
-                      asMobile
-                      trigger={
-                        <span className="flex items-center text-red-700 cursor-pointer">
-                          Delete
-                        </span>
-                      }
-                      onCancel={() => {
-                        console.log("cancel");
-                      }}
-                      onDelete={() => {
-                        console.log("delete");
-                      }}
-                    />
-                  </div>
-                  <div>
-                    <CategoryDialogBox
-                      isEditDialog
-                      editItem={category}
-                      trigger={
-                        <span className="flex items-center font-light mt-2 text-slate-700 cursor-pointer">
-                          Edit
-                        </span>
-                      }
-                    />
-                  </div>
-                </PopoverContent>
-              </Popover>
-            </CardContent>
-          </Card>
-        ))}
+        {categories && categories.length > 0 ? (
+          categories.map((category) => (
+            <Card key={category._id} className="w-full mb-3">
+              <CardContent className="flex justify-between items-center p-3">
+                <p className="font-medium">{category.name}</p>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <button>
+                      <DotsVerticalIcon fontSize={30} />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-24 mr-4 py-2 px-2">
+                    <div>
+                      <DeleteModal
+                        asMobile
+                        trigger={
+                          <span className="flex items-center text-red-700 cursor-pointer">
+                            Delete
+                          </span>
+                        }
+                        onCancel={() => {
+                          console.log("cancel");
+                        }}
+                        onDelete={() => {
+                          console.log("delete");
+                        }}
+                      />
+                    </div>
+                    <div>
+                      <CategoryDialogBox
+                        isEditDialog
+                        editItem={category}
+                        trigger={
+                          <span className="flex items-center font-light mt-2 text-slate-700 cursor-pointer">
+                            Edit
+                          </span>
+                        }
+                      />
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </CardContent>
+            </Card>
+          ))
+        ) : (
+          <ListSkeleton /> // Message when categories is empty
+        )}
       </ScrollArea>
     </div>
   );

@@ -38,7 +38,7 @@ const HomePage = () => {
   const data = generateRandomData();
   return (
     <>
-      <div className="flex flex-col items-center justify-center h-dvh overflow-hidden">
+      <div className="flex flex-col items-center justify-center">
         <div className="flex justify-between text-white p-4 absolute top-2 left-0 w-full z-50">
           <div>
             <Greeting className="text-sm" />

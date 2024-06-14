@@ -43,7 +43,12 @@ export const CategoryService = () => {
     }
   };
 
-  const getAll = async (userId: string, page = 1, limit = 10) => {
+  const getAll = async (
+    userId: string,
+    page = 1,
+    limit = 10,
+    search: string | null = null
+  ) => {
     // Ensure page and limit are numbers and have valid values
     page = Math.max(1, +page);
     limit = Math.max(1, +limit);
@@ -51,17 +56,25 @@ export const CategoryService = () => {
     // Calculate the number of documents to skip
     const skip = (page - 1) * limit;
 
+    let filter;
+    if (search) {
+      filter = {
+        userId: { $in: [userId, null] },
+        name: { $regex: search, $options: "i" },
+      };
+    } else {
+      filter = {
+        userId: { $in: [userId, null] },
+      };
+    }
+
     // Find the categories with pagination
-    const cats = await Category.find({
-      userId: { $in: [userId, null] },
-    })
+    const cats = await Category.find(filter, { __v: 0 })
       .skip(skip)
       .limit(limit);
 
     // Optionally: Get the total count of matching documents for pagination metadata
-    const totalDocs = await Category.countDocuments({
-      userId: { $in: [userId, null] },
-    });
+    const totalDocs = await Category.countDocuments(filter);
 
     // Calculate total pages
     const totalPages = Math.ceil(totalDocs / limit);

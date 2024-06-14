@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 
+mongoose.set("strictPopulate", false);
+
 export async function connect() {
   try {
     console.log(process.env.MONGO_URL);

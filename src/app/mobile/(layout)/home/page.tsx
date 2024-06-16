@@ -4,7 +4,6 @@ import Bg from "../../../../../public/home-bg.png";
 import IncomeArrow from "../../../../../public/income-arrow.png";
 import ExpenseArrow from "../../../../../public/expense-arrow.png";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { useEffect } from "react";
 import { useLogin } from "@/hooks/useLogin";
 import Logout from "@/components/common/logout";
 import greetPlugin from "@/utils/frontend/date";
@@ -13,11 +12,7 @@ import Greeting from "@/components/common/greeting";
 
 const HomePage = () => {
   dayjs.extend(greetPlugin);
-  const { user, getLoggedInUserData } = useLogin();
-  useEffect(() => {
-    getLoggedInUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const { user } = useLogin();
   const generateRandomData = () => {
     const categories = ["Movies", "Shopping", "Dining", "Travel", "Utilities"];
     const amounts = [-200, -400, -600, -800, -1000];

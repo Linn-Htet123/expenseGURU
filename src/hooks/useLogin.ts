@@ -1,7 +1,7 @@
 import axios from "axios";
 import { SignInType } from "@/validations/sign-in";
 import { useToast } from "@/components/ui/use-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Route } from "@/enums/route";
 export const useLogin = () => {
@@ -57,10 +57,14 @@ export const useLogin = () => {
     }
   };
 
+  useEffect(() => {
+    getLoggedInUserData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return {
     login,
     loading,
-    getLoggedInUserData,
     user,
   };
 };

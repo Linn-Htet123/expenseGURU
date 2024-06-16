@@ -1,4 +1,5 @@
 "use client";
+
 import WithSuspense from "@/components/common/withSuspense";
 import Image from "next/image";
 import Bg from "../../../../../public/home-bg.png";
@@ -32,18 +33,16 @@ import { Categories } from "@/types/category";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Loading } from "@/components/common/loading";
 
-const Category = () => {
-  return (
-    <div className="w-full h-full flex flex-col">
-      <div className="relative w-full flex-1 z-10 flex flex-col items-center justify-start">
-        <Image src={Bg} alt="background" className="w-screen" priority />
-        <WithSuspense>
-          <CategoryList />
-        </WithSuspense>
-      </div>
+const Category = () => (
+  <div className="w-full h-full flex flex-col">
+    <div className="relative w-full flex-1 z-10 flex flex-col items-center justify-start">
+      <Image src={Bg} alt="background" className="w-screen" priority />
+      <WithSuspense>
+        <CategoryList />
+      </WithSuspense>
     </div>
-  );
-};
+  </div>
+);
 
 const CategoryDialogBox = ({
   trigger,
@@ -62,20 +61,14 @@ const CategoryDialogBox = ({
   handleSubmit: (category: CategoryType) => void;
   isLoading: boolean;
 }) => {
-  const getActionLabel = () => {
-    return isEditDialog ? "Edit Category" : "Add Category";
-  };
-
-  const handleDialogOpen = () => {
-    setIsOpen(!isOpen);
-  };
+  const actionLabel = isEditDialog ? "Edit Category" : "Add Category";
 
   return (
-    <Dialog open={isOpen} onOpenChange={handleDialogOpen}>
+    <Dialog open={isOpen} onOpenChange={() => setIsOpen(!isOpen)}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="w-[90%]">
         <DialogHeader>
-          <DialogTitle>{getActionLabel()}</DialogTitle>
+          <DialogTitle>{actionLabel}</DialogTitle>
         </DialogHeader>
         <Formik
           initialValues={{
@@ -100,7 +93,7 @@ const CategoryDialogBox = ({
             </div>
             <DialogFooter className="mt-4">
               <Button type="submit" disabled={isLoading}>
-                {isLoading ? <Loading /> : getActionLabel()}
+                {isLoading ? <Loading /> : actionLabel}
               </Button>
             </DialogFooter>
           </Form>
@@ -111,15 +104,31 @@ const CategoryDialogBox = ({
 };
 
 const CategoryList = () => {
-  const { categories, createCategory, loading } = useCategory();
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { categories, loading, createCategory, editCategory, deleteCategory } =
+    useCategory();
+  const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState<boolean>(false);
+  const [currentEditCategoryId, setCurrentEditCategoryId] = useState("");
 
   const handleCreate = async (category: CategoryType) => {
     await createCategory(category);
-    setIsOpen(false);
+    setIsCreateDialogOpen(false);
   };
 
-  const handleEdit = async (category: CategoryType) => {};
+  const handleEdit = async (category: { name: string; _id: string }) => {
+    await editCategory(category);
+    setIsEditDialogOpen(false);
+  };
+
+  const handleDelete = async (categoryId: string) => {
+    await deleteCategory(categoryId);
+    // Optionally handle state update after deletion, e.g., fetching updated list
+  };
+
+  const openEditDialog = (categoryId: string) => {
+    setCurrentEditCategoryId(categoryId);
+    setIsEditDialogOpen(true);
+  };
 
   return (
     <div className="h-[92%] w-full bg-slate-50 absolute bottom-0 rounded-t-[30px] px-4 py-5 flex flex-col items-center justify-start">
@@ -127,8 +136,8 @@ const CategoryList = () => {
         <CategoryDialogBox
           trigger={<Button>Add Category</Button>}
           handleSubmit={handleCreate}
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
+          isOpen={isCreateDialogOpen}
+          setIsOpen={setIsCreateDialogOpen}
           isLoading={loading}
         />
       </div>
@@ -145,44 +154,44 @@ const CategoryList = () => {
                     </button>
                   </PopoverTrigger>
                   <PopoverContent className="w-24 mr-4 py-2 px-2">
-                    <div>
-                      <DeleteModal
-                        asMobile
-                        trigger={
-                          <span className="flex items-center text-red-700 cursor-pointer">
-                            Delete
-                          </span>
-                        }
-                        onCancel={() => {
-                          console.log("cancel");
-                        }}
-                        onDelete={() => {
-                          console.log("delete");
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <CategoryDialogBox
-                        isEditDialog
-                        handleSubmit={handleEdit}
-                        editItem={category}
-                        isOpen={isOpen}
-                        setIsOpen={setIsOpen}
-                        isLoading={loading}
-                        trigger={
-                          <span className="flex items-center font-light mt-2 text-slate-700 cursor-pointer">
-                            Edit
-                          </span>
-                        }
-                      />
-                    </div>
+                    <DeleteModal
+                      asMobile
+                      trigger={
+                        <span className="flex items-center text-red-700 cursor-pointer">
+                          Delete
+                        </span>
+                      }
+                      onCancel={() => console.log("cancel")}
+                      onDelete={() => handleDelete(category._id)}
+                    />
+                    <CategoryDialogBox
+                      isEditDialog
+                      handleSubmit={(editedCategory) =>
+                        handleEdit({
+                          ...editedCategory,
+                          _id: currentEditCategoryId,
+                        })
+                      }
+                      editItem={category}
+                      isOpen={isEditDialogOpen}
+                      setIsOpen={setIsEditDialogOpen}
+                      isLoading={loading}
+                      trigger={
+                        <span
+                          className="flex items-center font-light mt-2 text-slate-700 cursor-pointer"
+                          onClick={() => openEditDialog(category._id)}
+                        >
+                          Edit
+                        </span>
+                      }
+                    />
                   </PopoverContent>
                 </Popover>
               </CardContent>
             </Card>
           ))
         ) : (
-          <ListSkeleton /> // Message when categories is empty
+          <ListSkeleton />
         )}
       </ScrollArea>
     </div>

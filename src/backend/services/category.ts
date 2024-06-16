@@ -69,8 +69,9 @@ export const CategoryService = () => {
       };
     }
 
-    // Find the categories with pagination
+    // Find the categories with pagination and sort by createdAt in descending order
     const cats = await Category.find(filter, { __v: 0 })
+      .sort({ createdAt: -1 }) // Sort by createdAt in descending order
       .skip(skip)
       .limit(limit);
 

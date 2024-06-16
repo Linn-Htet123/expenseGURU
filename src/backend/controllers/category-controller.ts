@@ -54,7 +54,7 @@ export const CategoryController = () => {
       const savedCategory = await saveCategory({ ...body, userId });
       return HttpCreatedHandler({
         data: savedCategory,
-        responseMessage: "Category created successfully",
+        message: "Category created successfully",
         success: true,
       });
     } catch (error: any) {
@@ -72,9 +72,11 @@ export const CategoryController = () => {
 
       const id = await chunkUrl(request);
       const userId = request.headers.get("userId")!;
-      const category = await findCategoryById(id);
+      let category = await findCategoryById(id);
       await updateCategory(id, { ...body, userId });
+      category.name = body.name;
       return HttpCreatedHandler({
+        data: category,
         success: true,
         message: "Category updated successfully",
       });

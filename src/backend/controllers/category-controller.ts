@@ -51,9 +51,9 @@ export const CategoryController = () => {
         return HttpBadRequestHandler(validatedResult);
       }
 
-      await saveCategory({ ...body, userId });
-
+      const savedCategory = await saveCategory({ ...body, userId });
       return HttpCreatedHandler({
+        data: savedCategory,
         responseMessage: "Category created successfully",
         success: true,
       });

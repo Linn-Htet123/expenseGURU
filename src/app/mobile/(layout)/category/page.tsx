@@ -28,6 +28,9 @@ import { Label } from "@/components/ui/label";
 import DeleteModal from "@/components/common/deleteModal";
 import { useCategory } from "@/hooks/useCategory";
 import ListSkeleton from "@/components/common/listSkeleton";
+import { Categories } from "@/types/category";
+import { Dispatch, SetStateAction, useState } from "react";
+import { Loading } from "@/components/common/loading";
 
 const Category = () => {
   return (
@@ -46,24 +49,29 @@ const CategoryDialogBox = ({
   trigger,
   isEditDialog = false,
   editItem,
+  isOpen,
+  setIsOpen,
+  handleSubmit,
+  isLoading,
 }: {
   trigger: React.ReactNode;
   isEditDialog?: boolean;
-  editItem?: {
-    name: string;
-    id: number;
-    type: string;
-  };
+  editItem?: Categories;
+  isOpen?: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  handleSubmit: (category: CategoryType) => void;
+  isLoading: boolean;
 }) => {
   const getActionLabel = () => {
     return isEditDialog ? "Edit Category" : "Add Category";
   };
-  const handleSubmit = (values: CategoryType) => {
-    console.log(values);
+
+  const handleDialogOpen = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={handleDialogOpen}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="w-[90%]">
         <DialogHeader>
@@ -91,7 +99,9 @@ const CategoryDialogBox = ({
               />
             </div>
             <DialogFooter className="mt-4">
-              <Button type="submit">{getActionLabel()}</Button>
+              <Button type="submit" disabled={isLoading}>
+                {isLoading ? <Loading /> : getActionLabel()}
+              </Button>
             </DialogFooter>
           </Form>
         </Formik>
@@ -101,12 +111,26 @@ const CategoryDialogBox = ({
 };
 
 const CategoryList = () => {
-  const { categories } = useCategory();
+  const { categories, createCategory, loading } = useCategory();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const handleCreate = async (category: CategoryType) => {
+    await createCategory(category);
+    setIsOpen(false);
+  };
+
+  const handleEdit = async (category: CategoryType) => {};
 
   return (
     <div className="h-[92%] w-full bg-slate-50 absolute bottom-0 rounded-t-[30px] px-4 py-5 flex flex-col items-center justify-start">
       <div className="flex justify-center w-[90%]">
-        <CategoryDialogBox trigger={<Button>Add Category</Button>} />
+        <CategoryDialogBox
+          trigger={<Button>Add Category</Button>}
+          handleSubmit={handleCreate}
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          isLoading={loading}
+        />
       </div>
       <ScrollArea className="grow w-full mt-5 pb-14">
         {categories && categories.length > 0 ? (
@@ -140,7 +164,11 @@ const CategoryList = () => {
                     <div>
                       <CategoryDialogBox
                         isEditDialog
+                        handleSubmit={handleEdit}
                         editItem={category}
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}
+                        isLoading={loading}
                         trigger={
                           <span className="flex items-center font-light mt-2 text-slate-700 cursor-pointer">
                             Edit

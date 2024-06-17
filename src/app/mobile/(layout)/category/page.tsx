@@ -122,7 +122,6 @@ const CategoryList = () => {
 
   const handleDelete = async (categoryId: string) => {
     await deleteCategory(categoryId);
-    // Optionally handle state update after deletion, e.g., fetching updated list
   };
 
   const openEditDialog = (categoryId: string) => {

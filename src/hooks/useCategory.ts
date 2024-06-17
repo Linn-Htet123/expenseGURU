@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import { Categories } from "@/types/category";
 import { CategoryType } from "@/validations/category/create";
 import axiosInstance from "@/lib/axios";
@@ -11,24 +10,39 @@ export const useCategory = () => {
   const [categories, setCategories] = useState<Categories[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const createCategory = useCallback(async (category: CategoryType) => {
+  const fetchCategories = useCallback(async () => {
     try {
-      setLoading(true);
-      const response = await axiosInstance.post("/category", category);
-      const newCategory = response.data.data;
-
-      if (response.data.status === HttpStatus.CREATED) {
-        setCategories((prevCategories) => [newCategory, ...prevCategories]);
-        return successToast(response.data.message);
-      }
+      const response = await axiosInstance.get("/category");
+      const data = response.data.data.data;
+      setCategories(data);
     } catch (error: any) {
       return errorToast(
         error.response.data.message || error.response.data.error
       );
-    } finally {
-      setLoading(false);
     }
-  }, []);
+  }, [errorToast]);
+
+  const createCategory = useCallback(
+    async (category: CategoryType) => {
+      try {
+        setLoading(true);
+        const response = await axiosInstance.post("/category", category);
+        const newCategory = response.data.data;
+
+        if (response.data.status === HttpStatus.CREATED) {
+          setCategories((prevCategories) => [newCategory, ...prevCategories]);
+          return successToast(response.data.message);
+        }
+      } catch (error: any) {
+        return errorToast(
+          error.response.data.message || error.response.data.error
+        );
+      } finally {
+        setLoading(false);
+      }
+    },
+    [errorToast, successToast]
+  );
 
   const editCategory = useCallback(
     async (category: { name: string; _id: string }) => {
@@ -55,41 +69,34 @@ export const useCategory = () => {
         setLoading(false);
       }
     },
-    []
+    [errorToast, successToast]
   );
-  const deleteCategory = useCallback(async (id: string) => {
-    try {
-      const response = await axiosInstance.delete(`/category/${id}`);
-      if (response.data.status === HttpStatus.CREATED) {
-        setCategories((prevCategories) => {
-          const filteredCategories = prevCategories.filter(
-            (category) => category._id !== id
-          );
-          return filteredCategories;
-        });
-        return successToast(response.data.message);
-      }
-    } catch (error: any) {
-      return errorToast(
-        error.response.data.message || error.response.data.error
-      );
-    }
-  }, []);
 
-  useEffect(() => {
-    const fetchCategories = async () => {
+  const deleteCategory = useCallback(
+    async (id: string) => {
       try {
-        const response = await axiosInstance.get("/category");
-        const data = response.data.data.data;
-        setCategories(data);
+        const response = await axiosInstance.delete(`/category/${id}`);
+        if (response.data.status === HttpStatus.CREATED) {
+          setCategories((prevCategories) => {
+            const filteredCategories = prevCategories.filter(
+              (category) => category._id !== id
+            );
+            return filteredCategories;
+          });
+          return successToast(response.data.message);
+        }
       } catch (error: any) {
         return errorToast(
           error.response.data.message || error.response.data.error
         );
       }
-    };
+    },
+    [errorToast, successToast]
+  );
 
+  useEffect(() => {
     fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return { categories, loading, createCategory, editCategory, deleteCategory };

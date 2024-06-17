@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { CategoryType, createValidation } from "@/validations/category/create";
 import { Label } from "@/components/ui/label";
 import { Categories } from "@/types/category";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Loading } from "@/components/common/loading";
 interface Props {
   trigger: React.ReactNode;

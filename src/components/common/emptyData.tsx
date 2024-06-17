@@ -1,7 +1,7 @@
 const EmptyData = ({ dataName }: { dataName: string }) => {
   return (
     <section className="container px-4 mx-auto">
-      <div className="flex items-center w-full mt-6 text-center border rounded-lg h-96">
+      <div className="flex items-center w-full mt-6 text-center h-96">
         <div className="flex flex-col w-full max-w-sm px-4 mx-auto">
           <div className="p-3 mx-auto text-white bg-[#40dbd081] rounded-full">
             <svg

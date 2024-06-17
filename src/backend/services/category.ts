@@ -40,7 +40,7 @@ export const CategoryService = () => {
       await existingCategory(body.userId, body.name);
       await Category.findOneAndUpdate({ _id: id }, body);
     } catch (error: any) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   };
 

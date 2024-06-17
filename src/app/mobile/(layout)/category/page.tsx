@@ -32,6 +32,7 @@ import ListSkeleton from "@/components/common/listSkeleton";
 import { Categories } from "@/types/category";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Loading } from "@/components/common/loading";
+import EmptyData from "@/components/common/emptyData";
 
 const Category = () => (
   <div className="w-full h-full flex flex-col">
@@ -104,8 +105,14 @@ const CategoryDialogBox = ({
 };
 
 const CategoryList = () => {
-  const { categories, loading, createCategory, editCategory, deleteCategory } =
-    useCategory();
+  const {
+    categories,
+    loading,
+    isFetching,
+    createCategory,
+    editCategory,
+    deleteCategory,
+  } = useCategory();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState<boolean>(false);
   const [currentEditCategoryId, setCurrentEditCategoryId] = useState("");
@@ -141,56 +148,62 @@ const CategoryList = () => {
         />
       </div>
       <ScrollArea className="grow w-full mt-5 pb-14">
-        {categories && categories.length > 0 ? (
-          categories.map((category) => (
-            <Card key={category._id} className="w-full mb-3">
-              <CardContent className="flex justify-between items-center p-3">
-                <p className="font-medium">{category.name}</p>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <button>
-                      <DotsVerticalIcon fontSize={30} />
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-24 mr-4 py-2 px-2">
-                    <DeleteModal
-                      asMobile
-                      trigger={
-                        <span className="flex items-center text-red-700 cursor-pointer">
-                          Delete
-                        </span>
-                      }
-                      onCancel={() => console.log("cancel")}
-                      onDelete={() => handleDelete(category._id)}
-                    />
-                    <CategoryDialogBox
-                      isEditDialog
-                      handleSubmit={(editedCategory) =>
-                        handleEdit({
-                          ...editedCategory,
-                          _id: currentEditCategoryId,
-                        })
-                      }
-                      editItem={category}
-                      isOpen={isEditDialogOpen}
-                      setIsOpen={setIsEditDialogOpen}
-                      isLoading={loading}
-                      trigger={
-                        <span
-                          className="flex items-center font-light mt-2 text-slate-700 cursor-pointer"
-                          onClick={() => openEditDialog(category._id)}
-                        >
-                          Edit
-                        </span>
-                      }
-                    />
-                  </PopoverContent>
-                </Popover>
-              </CardContent>
-            </Card>
-          ))
-        ) : (
+        {isFetching ? (
           <ListSkeleton />
+        ) : (
+          <>
+            {categories && categories.length > 0 ? (
+              categories.map((category) => (
+                <Card key={category._id} className="w-full mb-3">
+                  <CardContent className="flex justify-between items-center p-3">
+                    <p className="font-medium">{category.name}</p>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <button>
+                          <DotsVerticalIcon fontSize={30} />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-24 mr-4 py-2 px-2">
+                        <DeleteModal
+                          asMobile
+                          trigger={
+                            <span className="flex items-center text-red-700 cursor-pointer">
+                              Delete
+                            </span>
+                          }
+                          onCancel={() => console.log("cancel")}
+                          onDelete={() => handleDelete(category._id)}
+                        />
+                        <CategoryDialogBox
+                          isEditDialog
+                          handleSubmit={(editedCategory) =>
+                            handleEdit({
+                              ...editedCategory,
+                              _id: currentEditCategoryId,
+                            })
+                          }
+                          editItem={category}
+                          isOpen={isEditDialogOpen}
+                          setIsOpen={setIsEditDialogOpen}
+                          isLoading={loading}
+                          trigger={
+                            <span
+                              className="flex items-center font-light mt-2 text-slate-700 cursor-pointer"
+                              onClick={() => openEditDialog(category._id)}
+                            >
+                              Edit
+                            </span>
+                          }
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <EmptyData dataName="categories" />
+            )}
+          </>
         )}
       </ScrollArea>
     </div>

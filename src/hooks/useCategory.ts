@@ -9,9 +9,11 @@ export const useCategory = () => {
   const { successToast, errorToast } = useToastHook();
   const [categories, setCategories] = useState<Categories[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(false);
 
   const fetchCategories = useCallback(async () => {
     try {
+      setIsFetching(true);
       const response = await axiosInstance.get("/category");
       const data = response.data.data.data;
       setCategories(data);
@@ -19,6 +21,8 @@ export const useCategory = () => {
       return errorToast(
         error.response.data.message || error.response.data.error
       );
+    } finally {
+      setIsFetching(false);
     }
   }, [errorToast]);
 
@@ -99,5 +103,12 @@ export const useCategory = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { categories, loading, createCategory, editCategory, deleteCategory };
+  return {
+    categories,
+    loading,
+    isFetching,
+    createCategory,
+    editCategory,
+    deleteCategory,
+  };
 };

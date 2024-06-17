@@ -9,11 +9,10 @@ export const useCategory = () => {
   const { successToast, errorToast } = useToastHook();
   const [categories, setCategories] = useState<Categories[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
+  const [isFetching, setIsFetching] = useState<boolean>(true);
 
   const fetchCategories = useCallback(async () => {
     try {
-      setIsFetching(true);
       const response = await axiosInstance.get("/category");
       const data = response.data.data.data;
       setCategories(data);

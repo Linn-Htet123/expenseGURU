@@ -61,23 +61,23 @@ export const DESKTOP_SIDE_MENU = [
     icon: HomeIcon,
   },
   {
-    name: "Pages",
-    route: Route.HOME,
-    icon: FileIcon,
-  },
-  {
-    name: "Components",
-    route: Route.HOME,
+    name: "Category",
+    route: Route.CATEGORY,
     icon: LayoutGridIcon,
   },
   {
-    name: "Layouts",
-    route: Route.HOME,
+    name: "Transactions",
+    route: Route.TRANSACTIONS,
+    icon: FileIcon,
+  },
+  {
+    name: "Wallet",
+    route: Route.WALLET,
     icon: LayersIcon,
   },
   {
-    name: "Settings",
-    route: Route.HOME,
+    name: "Profile",
+    route: Route.PROFILE,
     icon: SettingsIcon,
   },
 ];

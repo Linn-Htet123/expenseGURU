@@ -28,9 +28,11 @@ const CategoryList = () => {
     deleteCategory,
     fetchMore,
   } = useCategory();
+
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState<boolean>(false);
-  const [currentEditCategoryId, setCurrentEditCategoryId] = useState("");
+  const [currentEditCategoryId, setCurrentEditCategoryId] =
+    useState<string>("");
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const router = useRouter();
 
@@ -48,6 +50,10 @@ const CategoryList = () => {
   const handleDelete = async (categoryId: string) => {
     await deleteCategory(categoryId);
     setOpenPopoverId(null);
+  };
+
+  const togglePopover = (categoryId: string) => {
+    setOpenPopoverId(openPopoverId === categoryId ? null : categoryId);
   };
 
   const openEditDialog = (categoryId: string) => {
@@ -85,18 +91,14 @@ const CategoryList = () => {
               alignItems: "center",
             }}
           >
-            {categories && categories.length > 0 ? (
+            {categories.length > 0 ? (
               categories.map((category) => (
                 <Card key={category._id} className="w-full mb-3">
                   <CardContent className="flex justify-between items-center p-3">
                     <p className="font-medium">{category.name}</p>
                     <Popover
                       open={openPopoverId === category._id}
-                      onOpenChange={() =>
-                        setOpenPopoverId(
-                          openPopoverId === category._id ? null : category._id
-                        )
-                      }
+                      onOpenChange={() => togglePopover(category._id)}
                     >
                       <PopoverTrigger asChild>
                         <button>
@@ -111,7 +113,7 @@ const CategoryList = () => {
                               Delete
                             </span>
                           }
-                          onCancel={() => router.refresh()}
+                          onCancel={() => togglePopover(category._id)}
                           onDelete={() => handleDelete(category._id)}
                         />
                         <CategoryDialogBox

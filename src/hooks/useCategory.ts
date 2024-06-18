@@ -32,7 +32,7 @@ export const useCategory = () => {
         setIsFetching(false);
       }
     },
-    [errorToast, categories]
+    [errorToast]
   );
 
   const fetchMore = async () => {

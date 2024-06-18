@@ -10,20 +10,38 @@ export const useCategory = () => {
   const [categories, setCategories] = useState<Categories[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [isFetching, setIsFetching] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [page, setPage] = useState<number>(1);
 
-  const fetchCategories = useCallback(async () => {
-    try {
-      const response = await axiosInstance.get("/category");
-      const data = response.data.data.data;
-      setCategories(data);
-    } catch (error: any) {
-      return errorToast(
-        error.response.data.message || error.response.data.error
-      );
-    } finally {
-      setIsFetching(false);
-    }
-  }, [errorToast]);
+  const fetchCategories = useCallback(
+    async (page = 1) => {
+      try {
+        const response = await axiosInstance.get(`/category?page=${page}`);
+        const data = response.data.data.data;
+        if (page === 1) {
+          setCategories(data);
+        } else {
+          setCategories((prevCategories) => [...prevCategories, ...data]);
+        }
+        setHasMore(data.length > 0);
+      } catch (error: any) {
+        return errorToast(
+          error.response.data.message || error.response.data.error
+        );
+      } finally {
+        setIsFetching(false);
+      }
+    },
+    [errorToast, categories]
+  );
+
+  const fetchMore = async () => {
+    setPage((prevPage) => {
+      const nextPage = prevPage + 1;
+      return nextPage;
+    });
+    console.log(page);
+  };
 
   const createCategory = useCallback(
     async (category: CategoryType) => {
@@ -98,16 +116,19 @@ export const useCategory = () => {
   );
 
   useEffect(() => {
-    fetchCategories();
+    fetchCategories(page);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page]);
 
   return {
     categories,
     loading,
     isFetching,
+    hasMore,
+    page,
     createCategory,
     editCategory,
     deleteCategory,
+    fetchMore,
   };
 };

@@ -15,18 +15,23 @@ import { useState } from "react";
 import { CategoryType } from "@/validations/category/create";
 import CategoryDialogBox from "./categoryDialogBox";
 import { Button } from "@/components/ui/button";
+import InfiniteScroll from "react-infinite-scroll-component";
+
 const CategoryList = () => {
   const {
     categories,
     loading,
     isFetching,
+    hasMore,
     createCategory,
     editCategory,
     deleteCategory,
+    fetchMore,
   } = useCategory();
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState<boolean>(false);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState<boolean>(false);
   const [currentEditCategoryId, setCurrentEditCategoryId] = useState("");
+  const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
   const router = useRouter();
 
   const handleCreate = async (category: CategoryType) => {
@@ -37,10 +42,12 @@ const CategoryList = () => {
   const handleEdit = async (category: { name: string; _id: string }) => {
     await editCategory(category);
     setIsEditDialogOpen(false);
+    setOpenPopoverId(null);
   };
 
   const handleDelete = async (categoryId: string) => {
     await deleteCategory(categoryId);
+    setOpenPopoverId(null);
   };
 
   const openEditDialog = (categoryId: string) => {
@@ -59,17 +66,38 @@ const CategoryList = () => {
           isLoading={loading}
         />
       </div>
-      <ScrollArea className="grow w-full mt-5 pb-14">
-        {isFetching ? (
+      <div
+        className="w-full grow whitespace-nowrap overflow-auto scrollbar-hide mt-5 pb-14"
+        id="scrollableDiv"
+      >
+        {isFetching && categories.length === 0 ? (
           <ListSkeleton />
         ) : (
-          <>
+          <InfiniteScroll
+            dataLength={categories.length}
+            next={fetchMore}
+            hasMore={hasMore}
+            loader={<ListSkeleton />}
+            scrollableTarget="scrollableDiv"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
             {categories && categories.length > 0 ? (
               categories.map((category) => (
                 <Card key={category._id} className="w-full mb-3">
                   <CardContent className="flex justify-between items-center p-3">
                     <p className="font-medium">{category.name}</p>
-                    <Popover>
+                    <Popover
+                      open={openPopoverId === category._id}
+                      onOpenChange={() =>
+                        setOpenPopoverId(
+                          openPopoverId === category._id ? null : category._id
+                        )
+                      }
+                    >
                       <PopoverTrigger asChild>
                         <button>
                           <DotsVerticalIcon fontSize={30} />
@@ -115,9 +143,9 @@ const CategoryList = () => {
             ) : (
               <EmptyData dataName="categories" />
             )}
-          </>
+          </InfiniteScroll>
         )}
-      </ScrollArea>
+      </div>
     </div>
   );
 };

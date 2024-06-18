@@ -22,7 +22,7 @@ export const CategoryController = () => {
     try {
       const params = request.nextUrl.searchParams;
       const page = params.get("page") ?? "1";
-      const limit = params.get("limit") ?? "10";
+      const limit = params.get("limit") ?? "20";
       const search = params.get("search") ?? null;
 
       const validatedResult = validate({ page, limit, search }, getValidation);

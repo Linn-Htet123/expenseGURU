@@ -22,7 +22,7 @@ export const CategoryController = () => {
     try {
       const params = request.nextUrl.searchParams;
       const page = params.get("page") ?? "1";
-      const limit = params.get("limit") ?? "10";
+      const limit = params.get("limit") ?? "20";
       const search = params.get("search") ?? null;
 
       const validatedResult = validate({ page, limit, search }, getValidation);
@@ -51,10 +51,10 @@ export const CategoryController = () => {
         return HttpBadRequestHandler(validatedResult);
       }
 
-      await saveCategory({ ...body, userId });
-
+      const savedCategory = await saveCategory({ ...body, userId });
       return HttpCreatedHandler({
-        responseMessage: "Category created successfully",
+        data: savedCategory,
+        message: "Category created successfully",
         success: true,
       });
     } catch (error: any) {
@@ -72,9 +72,11 @@ export const CategoryController = () => {
 
       const id = await chunkUrl(request);
       const userId = request.headers.get("userId")!;
-      const category = await findCategoryById(id);
+      let category = await findCategoryById(id);
       await updateCategory(id, { ...body, userId });
+      category.name = body.name;
       return HttpCreatedHandler({
+        data: category,
         success: true,
         message: "Category updated successfully",
       });

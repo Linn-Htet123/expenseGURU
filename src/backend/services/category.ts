@@ -6,12 +6,13 @@ export const CategoryService = () => {
     const newCategory = new Category(category);
     return newCategory;
   };
-
   const save = async (category: any) => {
     await existingCategory(category.userId, category.name);
     const newCategory = create(category);
     const savedCategory = await newCategory.save();
-    return savedCategory;
+    const result = savedCategory.toObject();
+    delete result.__v;
+    return result;
   };
 
   const findById = async (id: string) => {
@@ -39,7 +40,7 @@ export const CategoryService = () => {
       await existingCategory(body.userId, body.name);
       await Category.findOneAndUpdate({ _id: id }, body);
     } catch (error: any) {
-      throw new Error(error);
+      throw new Error(error.message);
     }
   };
 
@@ -68,8 +69,9 @@ export const CategoryService = () => {
       };
     }
 
-    // Find the categories with pagination
+    // Find the categories with pagination and sort by createdAt in descending order
     const cats = await Category.find(filter, { __v: 0 })
+      .sort({ createdAt: -1 }) // Sort by createdAt in descending order
       .skip(skip)
       .limit(limit);
 

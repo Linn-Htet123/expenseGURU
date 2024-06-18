@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 const { fontFamily } = require("tailwindcss/defaultTheme");
-const config = {
+
+const config: Config = {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -32,7 +33,7 @@ const config = {
           foreground: "var(--primary-foreground)",
         },
         primaryDark: {
-          DEFAULT: "var(--primary-400)",
+          DEFAULT: "var(--primary-dark)",
           foreground: "var(--primary-foreground)",
         },
         secondary: {
@@ -58,6 +59,10 @@ const config = {
         card: {
           DEFAULT: "var(--card)",
           foreground: "var(--card-foreground)",
+        },
+        success: {
+          DEFAULT: "var(--success)",
+          foreground: "var(--success-foreground)",
         },
       },
 
@@ -87,7 +92,7 @@ const config = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-} satisfies Config;
+  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar-hide")],
+};
 
 export default config;

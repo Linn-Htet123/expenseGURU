@@ -9,7 +9,12 @@ import Logout from "@/components/common/logout";
 import greetPlugin from "@/utils/frontend/date";
 import dayjs from "dayjs";
 import Greeting from "@/components/common/greeting";
-
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 const HomePage = () => {
   dayjs.extend(greetPlugin);
   const { user } = useLogin();
@@ -40,7 +45,18 @@ const HomePage = () => {
             <div className="text-xl font-semibold">{user.username}</div>
           </div>
           <div>
-            <Logout />
+            <div>
+              <Popover>
+                <PopoverTrigger>
+                  <div>
+                    <DotsHorizontalIcon fontSize={30} />
+                  </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-24 mr-4 py-2 px-2">
+                  <Logout />
+                </PopoverContent>
+              </Popover>
+            </div>
           </div>
         </div>
         <div className="absolute top-0 left-0 h-full">

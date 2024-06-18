@@ -25,8 +25,8 @@
     --input: #599f9f; /* 176 20% 50% */
     --ring: #59bfbf; /* 176 30.2% 50% */
     --radius: 0.5rem;
-
-    /* custom theme */
+    --success: #02ab37; /* Green for success */
+    --success-foreground: #ffffff; /* White foreground for success */
   }
   .dark {
     --background: #1a1a1a; /* 176 10% 10% */
@@ -49,6 +49,8 @@
     --input: #599f9f; /* 176 20% 50% */
     --ring: #59bfbf; /* 176 30.2% 50% */
     --radius: 0.5rem;
+    --success: #def7ec; /* Dark green for success */
+    --success-foreground: #ffffff; /* White foreground for success */
   }
 }
 

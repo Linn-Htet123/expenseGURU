@@ -5,7 +5,7 @@ import Loading from "@/lotties/landing_loading.json";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { Route } from "@/enums/route";
-import { getMobileRoute } from "@/utils/frontend/route";
+import { getMobileRoute, isMobile } from "@/utils/frontend/route";
 
 const Landing = () => {
   const [loading, setLoading] = useState(true);
@@ -19,7 +19,11 @@ const Landing = () => {
     return () => clearTimeout(timer);
   }, []);
   if (!loading) {
-    router.push(getMobileRoute(Route.WELCOME));
+    console.log("helo");
+    if (isMobile()) {
+      router.push(getMobileRoute(Route.WELCOME));
+    }
+    router.push(Route.HOME);
   }
   return (
     <div className="h-dvh bg-gradient-to-br from-primary to-[#488d88] flex flex-col justify-center items-center text-white font-bold text-3xl">

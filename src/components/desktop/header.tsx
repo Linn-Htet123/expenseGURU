@@ -10,29 +10,24 @@ import { useLogin } from "@/hooks/useLogin";
 import { Route } from "@/enums/route";
 import Lottie from "lottie-react";
 import Logo from "@/lotties/desktop_logo.json";
-import { ExitIcon } from "@radix-ui/react-icons";
-import { useLogout } from "@/hooks/useLogout";
+import Logout from "../common/logout";
 
 const Header = () => {
   const { user } = useLogin();
-
-  const { logout } = useLogout();
-  const handleLogout = async () => {
-    await logout();
-  };
-
   return (
-    <header className="flex items-center justify-between px-4 py-3 bg-[#438883] text-white">
+    <header className="flex items-center justify-between px-4 py-3 shadow-md bg-white border-secondary sticky top-0 z-50 text-white">
       <Link
         href={Route.HOME}
         className="flex items-center gap-2"
         prefetch={false}
       >
-        <Lottie
+        {/* <Lottie
           animationData={Logo}
           style={{ width: "50px", height: "50px" }}
-        />
-        <span className="text-lg font-medium">Expense GURU</span>
+        /> */}
+        <span className="text-xl font-semibold text-[#438883]">
+          Expense GURU
+        </span>
       </Link>
       <div className="flex items-center gap-4">
         <Popover>
@@ -42,17 +37,11 @@ const Header = () => {
           <PopoverContent className="p-4 w-56 mr-1">
             <div className="w-full">
               <div className="space-y-1">
-                <p className="text-sm font-medium">{user.username}</p>
-                <p className="text-sm text-[#438883]">{user.email}</p>
+                <p className="font-medium">{user.username}</p>
+                <p className="text-[#438883]">{user.email}</p>
               </div>
               <div className="border-t border-gray-200 my-2" />
-              <div
-                className="flex items-center gap-2 text-red-700 cursor-pointer hover:bg-slate-50 p-2 transition-all"
-                onClick={handleLogout}
-              >
-                <ExitIcon className="h-4 w-4" />
-                <span>Logout</span>
-              </div>
+              <Logout />
             </div>
           </PopoverContent>
         </Popover>

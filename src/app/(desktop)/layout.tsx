@@ -12,12 +12,12 @@ export default function DesktopLayout({
     <>
       <div className="flex flex-col h-dvh">
         <Header />
-        <div className="flex h-[calc(100dvh-74px)]">
+        <div className="flex h-[calc(100dvh-64px)]">
           <SideMenu />
           <ScrollArea className="grow h-full">{children}</ScrollArea>
         </div>
       </div>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

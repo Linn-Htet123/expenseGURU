@@ -1,3 +1,9 @@
+import Landing from "@/components/mobile/landing";
+
 export default function Home() {
-  return <div className="">Hello world</div>;
+  return (
+    <div>
+      <Landing />
+    </div>
+  );
 }

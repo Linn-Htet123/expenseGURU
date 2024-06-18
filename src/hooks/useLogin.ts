@@ -1,11 +1,12 @@
-import axios from "axios";
 import { SignInType } from "@/validations/sign-in";
-import { useToast } from "@/components/ui/use-toast";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import axiosInstance from "@/lib/axios";
 import { Route } from "@/enums/route";
+import { useToastHook } from "./useToastHook";
+import { HttpStatus } from "@/backend/enums/httpStatus";
 export const useLogin = () => {
-  const { toast } = useToast();
+  const { errorToast } = useToastHook();
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
   const [user, setUser] = useState<{ username: ""; email: "" }>({
@@ -16,7 +17,7 @@ export const useLogin = () => {
     try {
       const {
         data: { data },
-      } = await axios.get("/api/auth/me");
+      } = await axiosInstance.get("/auth/me");
       const userData = {
         username: data.username,
         email: data.email,
@@ -42,16 +43,15 @@ export const useLogin = () => {
   const login = async (user: SignInType) => {
     try {
       setLoading(true);
-      const { status } = await axios.post("/api/auth/signin", user);
-      if (status === 201) {
+      const { status } = await axiosInstance.post("/auth/signin", user);
+      if (status === HttpStatus.CREATED) {
         await setLoggedInUserData();
         router.push(Route.HOME);
       }
     } catch (error: any) {
-      toast({
-        variant: "destructive",
-        title: error.response.data.message,
-      });
+      return errorToast(
+        error.response.data.message || error.response.data.error
+      );
     } finally {
       setLoading(false);
     }

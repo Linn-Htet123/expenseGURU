@@ -13,6 +13,7 @@ import { FormField } from "@/components/common/formField";
 import { Formik, Form } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { Loading } from "@/components/common/loading";
+import { getMobileRoute, isMobile } from "@/utils/frontend/route";
 
 const SignUpForm = ({ className = "w-full" }: { className?: string }) => {
   const { signup, loading } = useSignup();
@@ -87,7 +88,10 @@ const SignUpForm = ({ className = "w-full" }: { className?: string }) => {
           </Button>
           <Label className="text-center w-full flex justify-center">
             Already have an account?{" "}
-            <Link href={Route.LOGIN} className="text-primary ml-2">
+            <Link
+              href={isMobile() ? getMobileRoute(Route.LOGIN) : Route.LOGIN}
+              className="text-primary ml-2"
+            >
               Login
             </Link>
           </Label>

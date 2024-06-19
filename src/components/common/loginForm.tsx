@@ -12,6 +12,7 @@ import { SignInType, signInValidation } from "@/validations/sign-in";
 import { Form, Formik } from "formik";
 import Link from "next/link";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { getMobileRoute, isMobile } from "@/utils/frontend/route";
 
 const LoginForm = ({ className = "w-full" }: { className?: string }) => {
   const { login, loading } = useLogin();
@@ -62,7 +63,10 @@ const LoginForm = ({ className = "w-full" }: { className?: string }) => {
 
             <Label className="text-center w-full flex justify-center">
               Do not have an account?
-              <Link href={Route.SIGNUP} className="text-primary ml-2">
+              <Link
+                href={isMobile() ? getMobileRoute(Route.SIGNUP) : Route.SIGNUP}
+                className="text-primary ml-2"
+              >
                 Signup
               </Link>
             </Label>

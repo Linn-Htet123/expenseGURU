@@ -10,6 +10,7 @@ import { useTab } from "@/hooks/useTab";
 import WithSuspense from "@/components/common/withSuspense";
 import Link from "next/link";
 import { Route } from "@/enums/route";
+import { getMobileRoute } from "@/utils/frontend/route";
 const Wallet = () => {
   return (
     <div className="w-full h-full flex flex-col">
@@ -33,13 +34,15 @@ const WalletList = () => {
         <Button>
           <span className="flex gap-2 items-center">
             <Image src={IncomeArrow} alt="income" />
-            <Link href={Route.ADD + "?tab=Income"}>Income</Link>
+            <Link href={getMobileRoute(Route.ADD) + "?tab=Income"}>Income</Link>
           </span>
         </Button>
         <Button>
           <span className="flex gap-2 items-center">
             <Image src={ExpenseArrow} alt="expense" />
-            <Link href={Route.ADD + "?tab=Expense"}>Expense</Link>
+            <Link href={getMobileRoute(Route.ADD) + "?tab=Expense"}>
+              Expense
+            </Link>
           </span>
         </Button>
       </div>

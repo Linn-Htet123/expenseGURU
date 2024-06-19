@@ -33,18 +33,18 @@ export default async function middleware(req: NextRequest) {
 
   const token = req.cookies.get("token")?.value ?? "";
   const isPublicPath = publicPaths.includes(pathname);
-  const isUserMobile = isMobile(userAgent);
+  const isMobileDevice = isMobile(userAgent);
 
   if (!isAPIRoute(pathname)) {
-    if (isUserMobile && !isMobileRoute(pathname)) {
+    if (isMobileDevice && !isMobileRoute(pathname)) {
       return redirectTo(MOBILE_HOME_PAGE, req);
-    } else if (!isUserMobile && isMobileRoute(pathname)) {
+    } else if (!isMobileDevice && isMobileRoute(pathname)) {
       return redirectTo(DESKTOP_HOME_PAGE, req);
     }
   }
   if (isPublicPath && token) {
-    const redirectPath = `/${
-      isUserMobile ? getMobileRoute(Route.HOME) : Route.HOME
+    const redirectPath = `${
+      isMobileDevice ? getMobileRoute(Route.HOME) : Route.HOME
     }`;
     return redirectTo(redirectPath, req);
   }
@@ -53,8 +53,8 @@ export default async function middleware(req: NextRequest) {
     if (pathname === MOBILE_HOME_PAGE || pathname === DESKTOP_HOME_PAGE) {
       return NextResponse.next();
     }
-    const redirectPath = `/${
-      isUserMobile ? getMobileRoute(Route.LOGIN) : Route.LOGIN
+    const redirectPath = `${
+      isMobileDevice ? getMobileRoute(Route.LOGIN) : Route.LOGIN
     }`;
     return redirectTo(redirectPath, req);
   }

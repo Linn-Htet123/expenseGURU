@@ -15,10 +15,21 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { useEffect, useState } from "react";
+
+interface ExpenseItem {
+  category: string;
+  amount: number;
+  date: string;
+}
+
 const HomePage = () => {
   dayjs.extend(greetPlugin);
+
+  const [data, setData] = useState<ExpenseItem[]>([]);
   const { user } = useLogin();
-  const generateRandomData = () => {
+
+  const generateRandomData = (): ExpenseItem[] => {
     const categories = ["Movies", "Shopping", "Dining", "Travel", "Utilities"];
     const amounts = [-200, -400, -600, -800, -1000];
     const dates = [
@@ -35,7 +46,11 @@ const HomePage = () => {
       date: dates[Math.floor(Math.random() * dates.length)],
     }));
   };
-  const data = generateRandomData();
+
+  useEffect(() => {
+    const data = generateRandomData();
+    setData(data);
+  }, []);
   return (
     <>
       <div className="flex flex-col items-center justify-center h-dvh overflow-hidden">
@@ -60,7 +75,12 @@ const HomePage = () => {
           </div>
         </div>
         <div className="absolute top-0 left-0 h-full">
-          <Image src={Bg} alt="background image" className="w-screen" />
+          <Image
+            src={Bg}
+            alt="background image"
+            className="w-screen"
+            priority
+          />
           <div className="relative bottom-[170px]  w-full flex flex-col h-full">
             <div className="mb-4">
               <HomeCard />
@@ -72,7 +92,7 @@ const HomePage = () => {
               <ScrollArea className="w-full h-[90%] px-4">
                 {data.map((item, index) => (
                   <div
-                    key={index + item.category.length}
+                    key={`item-${index}`}
                     className="flex justify-between items-center border-b border-slate-100 my-1"
                   >
                     <div className="flex flex-col py-2">

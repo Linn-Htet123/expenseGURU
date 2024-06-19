@@ -22,7 +22,7 @@ export const isMobile = (userAgent?: string) => {
 };
 
 export const getMobileRoute = (path: Route) => {
-  return `${Route.MOBILE}/${path}`;
+  return `${Route.MOBILE}${path}`;
 };
 
 export const createQueryString = (

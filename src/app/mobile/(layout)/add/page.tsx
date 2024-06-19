@@ -18,6 +18,7 @@ import WithSuspense from "@/components/common/withSuspense";
 import AddIcon from "../../../../../public/footerIcon/add-icon.svg";
 import Link from "next/link";
 import { Route } from "@/enums/route";
+import { getMobileRoute } from "@/utils/frontend/route";
 
 const Add = () => {
   return (
@@ -66,7 +67,7 @@ const TransactionForm = () => {
                 <span>Category</span>
               </Label>
               <Link
-                href={Route.CATEGORY}
+                href={getMobileRoute(Route.CATEGORY)}
                 className="p-1 rounded-full bg-[#2f7e79] w-[23px]"
               >
                 <Image src={AddIcon} alt="add icon" />

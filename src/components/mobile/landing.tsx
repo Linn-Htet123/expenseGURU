@@ -18,13 +18,13 @@ const Landing = () => {
 
     return () => clearTimeout(timer);
   }, []);
-  if (!loading) {
-    console.log("helo");
-    if (isMobile()) {
-      router.push(getMobileRoute(Route.WELCOME));
+
+  useEffect(() => {
+    if (!loading) {
+      router.push(isMobile() ? getMobileRoute(Route.WELCOME) : Route.HOME);
     }
-    router.push(Route.HOME);
-  }
+  }, [loading]);
+
   return (
     <div className="h-dvh bg-gradient-to-br from-primary to-[#488d88] flex flex-col justify-center items-center text-white font-bold text-3xl">
       <Lottie

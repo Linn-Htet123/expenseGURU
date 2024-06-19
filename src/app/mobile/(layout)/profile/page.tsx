@@ -6,6 +6,7 @@ import { ExitIcon, StackIcon } from "@radix-ui/react-icons";
 import { useLogout } from "@/hooks/useLogout";
 import Link from "next/link";
 import { Route } from "@/enums/route";
+import { getMobileRoute } from "@/utils/frontend/route";
 
 const Profile = () => {
   const { logout } = useLogout();
@@ -21,7 +22,7 @@ const Profile = () => {
           <ProfileHead />
           <div className="px-4 mt-4 w-full font-medium">
             <Link
-              href={Route.CATEGORY}
+              href={getMobileRoute(Route.CATEGORY)}
               className="flex items-center w-full py-4 gap-6"
             >
               <div>

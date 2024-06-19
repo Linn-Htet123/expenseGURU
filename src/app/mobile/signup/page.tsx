@@ -15,6 +15,7 @@ import {
 } from "@/validations/signup";
 import { useSignup } from "@/hooks/useSignup";
 import { Loading } from "@/components/common/loading";
+import { getMobileRoute } from "@/utils/frontend/route";
 
 const Signup = () => {
   const { signup, loading } = useSignup();
@@ -104,7 +105,10 @@ const Signup = () => {
                 </Button>
                 <Label className="text-center w-full flex justify-center">
                   Already have an account?{" "}
-                  <Link href={Route.LOGIN} className="text-primary ml-2">
+                  <Link
+                    href={getMobileRoute(Route.LOGIN)}
+                    className="text-primary ml-2"
+                  >
                     Login
                   </Link>
                 </Label>

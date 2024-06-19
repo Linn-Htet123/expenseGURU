@@ -5,6 +5,7 @@ import Lottie from "lottie-react";
 import Link from "next/link";
 import NotFoundData from "@/lotties/404.json";
 import Bg from "../../public/welcome-bg.png";
+import { getMobileRoute, isMobile } from "@/utils/frontend/route";
 
 const NotFound = () => {
   return (
@@ -29,7 +30,7 @@ const NotFound = () => {
             {` Sorry, we can't find that page. You'll find lots to explore on the
             home page.`}
           </p>
-          <Link href={Route.HOME}>
+          <Link href={isMobile() ? getMobileRoute(Route.HOME) : Route.HOME}>
             <Button>Back to Home</Button>
           </Link>
         </div>

@@ -11,6 +11,7 @@ import WithSuspense from "@/components/common/withSuspense";
 import Link from "next/link";
 import { Route } from "@/enums/route";
 import { getMobileRoute } from "@/utils/frontend/route";
+import TotalBalance from "@/components/common/totalBalance";
 const Wallet = () => {
   return (
     <div className="w-full h-full flex flex-col">
@@ -29,7 +30,7 @@ const WalletList = () => {
   return (
     <div className="h-[90%] w-full  bg-slate-50 absolute bottom-0 rounded-t-[30px] px-4 py-5 flex flex-col items-center justify-start">
       <span className="mb-1 text-slate-500">Total balance</span>
-      <h2 className="font-bold text-3xl mb-4">4,000,000</h2>
+      <TotalBalance className="mb-4" />
       <div className="flex gap-3 mb-3">
         <Button>
           <span className="flex gap-2 items-center">

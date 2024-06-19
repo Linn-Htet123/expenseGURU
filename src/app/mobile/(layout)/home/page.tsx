@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/popover";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { useEffect, useState } from "react";
+import TotalBalance from "@/components/common/totalBalance";
 
 interface ExpenseItem {
   category: string;
@@ -119,7 +120,9 @@ const HomeCard = () => {
       <div className="w-full h-[180px] bg-[#2f7e79] flex flex-col justify-between rounded-2xl shadow-lg shadow-[#2f7e79] p-4 text-white">
         <div className="flex flex-col mb-5">
           <span className="text-sm">Total balance</span>
-          <span className="text-3xl font-semibold">4,000</span>
+          <span className="text-3xl">
+            <TotalBalance className="font-semibold" />
+          </span>
         </div>
         <div className="flex justify-between">
           <div className="flex flex-col">

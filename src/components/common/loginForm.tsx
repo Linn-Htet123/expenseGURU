@@ -1,7 +1,6 @@
 "use client";
 import { FormField } from "@/components/common/formField";
 import { Loading } from "@/components/common/loading";
-import Landing from "@/components/mobile/landing";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { CardContent } from "@/components/ui/card";
@@ -12,6 +11,7 @@ import { SignInType, signInValidation } from "@/validations/sign-in";
 import { Form, Formik } from "formik";
 import Link from "next/link";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { getRelevantRoute } from "@/utils/frontend/route";
 
 const LoginForm = ({ className = "w-full" }: { className?: string }) => {
   const { login, loading } = useLogin();
@@ -62,7 +62,10 @@ const LoginForm = ({ className = "w-full" }: { className?: string }) => {
 
             <Label className="text-center w-full flex justify-center">
               Do not have an account?
-              <Link href={Route.SIGNUP} className="text-primary ml-2">
+              <Link
+                href={getRelevantRoute(Route.SIGNUP)}
+                className="text-primary ml-2"
+              >
                 Signup
               </Link>
             </Label>

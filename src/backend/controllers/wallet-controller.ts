@@ -6,14 +6,14 @@ import {
 } from "../helpers/httpExceptionHandler";
 
 export const WalletController = () => {
-  const { findByUserId } = WalletService();
+  const { findByUserId: findBalanceByUserId } = WalletService();
   const getBalance = async (request: NextRequest) => {
     const userId = request.headers.get("userId")!;
     try {
-      const response = await findByUserId(userId);
+      const balance = await findBalanceByUserId(userId);
       return HttpCreatedHandler({
         success: true,
-        data: response,
+        data: balance,
       });
     } catch (error: any) {
       return HttpBadRequestHandler({ error: error.message });

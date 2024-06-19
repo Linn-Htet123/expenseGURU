@@ -12,6 +12,7 @@ import { Form, Formik } from "formik";
 import { SignInType, signInValidation } from "@/validations/sign-in";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { FormField } from "@/components/common/formField";
+import LoginForm from "@/components/common/loginForm";
 const Login = () => {
   const { login, loading } = useLogin();
 
@@ -33,55 +34,7 @@ const Login = () => {
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Login</CardTitle>
         </CardHeader>
-        <Formik
-          initialValues={{
-            email: "",
-            password: "",
-          }}
-          validationSchema={toFormikValidationSchema(signInValidation)}
-          onSubmit={handleSubmit}
-        >
-          <Form>
-            <CardContent>
-              <div className="space-y-3.5">
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <FormField
-                    as={Input}
-                    name="email"
-                    type="email"
-                    id="email"
-                    placeholder="name@example.com"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password">Password</Label>
-                  <FormField
-                    name="password"
-                    type="password"
-                    as={Input}
-                    id="password"
-                  />
-                </div>
-                <Button
-                  className="w-full"
-                  type="submit"
-                  variant="gooeyLeft"
-                  disabled={loading}
-                >
-                  {loading ? <Loading /> : "Login"}
-                </Button>
-
-                <Label className="text-center w-full flex justify-center">
-                  Do not have an account?
-                  <Link href={Route.SIGNUP} className="text-primary ml-2">
-                    Signup
-                  </Link>
-                </Label>
-              </div>
-            </CardContent>
-          </Form>
-        </Formik>
+        <LoginForm />
       </Card>
     </div>
   );

@@ -68,7 +68,7 @@ const SignUpForm = ({ className = "w-full" }: { className?: string }) => {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="confirmPassword">confirm</Label>
+            <Label htmlFor="confirmPassword">Confirm Password</Label>
             <FormField
               name="confirmPassword"
               id="confirmPassword"

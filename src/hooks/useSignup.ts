@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import { Route } from "@/enums/route";
+import { getRelevantRoute } from "@/utils/frontend/route";
 export const useSignup = () => {
   const { toast } = useToast();
   const router = useRouter();
@@ -14,7 +15,7 @@ export const useSignup = () => {
       const { status } = await axios.post("/api/auth/signup", user);
       if (status === 201) {
         setLoading(false);
-        router.push(Route.LOGIN);
+        router.push(getRelevantRoute(Route.LOGIN));
       }
     } catch (error: any) {
       toast({

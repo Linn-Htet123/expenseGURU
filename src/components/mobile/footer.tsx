@@ -14,7 +14,7 @@ const Footer = () => {
           <Link
             key={footer.route}
             className="flex flex-col items-center"
-            href={footer.route}
+            href={getMobileRoute(footer.route)}
           >
             <div
               className={`${
@@ -26,7 +26,7 @@ const Footer = () => {
                 src={
                   footer.name === "add"
                     ? footer.icon
-                    : pathname === "/" + getMobileRoute(footer.route)
+                    : pathname === getMobileRoute(footer.route)
                     ? footer.activeIcon
                     : footer.icon
                 }

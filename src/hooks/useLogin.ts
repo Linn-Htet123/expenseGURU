@@ -5,6 +5,7 @@ import axiosInstance from "@/lib/axios";
 import { Route } from "@/enums/route";
 import { useToastHook } from "./useToastHook";
 import { HttpStatus } from "@/backend/enums/httpStatus";
+import { getRelevantRoute } from "@/utils/frontend/route";
 export const useLogin = () => {
   const { errorToast } = useToastHook();
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,7 +47,7 @@ export const useLogin = () => {
       const { status } = await axiosInstance.post("/auth/signin", user);
       if (status === HttpStatus.CREATED) {
         await setLoggedInUserData();
-        router.push(Route.HOME);
+        router.push(getRelevantRoute(Route.HOME));
       }
     } catch (error: any) {
       return errorToast(

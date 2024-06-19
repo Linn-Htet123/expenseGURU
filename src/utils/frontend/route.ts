@@ -35,3 +35,7 @@ export const createQueryString = (
 
   return params.toString();
 };
+
+export const getRelevantRoute = (path: Route): string => {
+  return isMobile() ? getMobileRoute(path) : path;
+};

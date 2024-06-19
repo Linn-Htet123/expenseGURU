@@ -5,7 +5,7 @@ import axiosInstance from "@/lib/axios";
 import { Route } from "@/enums/route";
 import { useToastHook } from "./useToastHook";
 import { HttpStatus } from "@/backend/enums/httpStatus";
-import { getMobileRoute, isMobile } from "@/utils/frontend/route";
+import { getRelevantRoute } from "@/utils/frontend/route";
 export const useLogin = () => {
   const { errorToast } = useToastHook();
   const [loading, setLoading] = useState<boolean>(false);
@@ -47,7 +47,7 @@ export const useLogin = () => {
       const { status } = await axiosInstance.post("/auth/signin", user);
       if (status === HttpStatus.CREATED) {
         await setLoggedInUserData();
-        router.push(isMobile() ? getMobileRoute(Route.HOME) : Route.HOME);
+        router.push(getRelevantRoute(Route.HOME));
       }
     } catch (error: any) {
       return errorToast(

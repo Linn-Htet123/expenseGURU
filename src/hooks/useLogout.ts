@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axios";
 import { useToastHook } from "./useToastHook";
 import { HttpStatus } from "@/backend/enums/httpStatus";
-import { getMobileRoute, isMobile } from "@/utils/frontend/route";
+import { getRelevantRoute } from "@/utils/frontend/route";
 
 export const useLogout = () => {
   const { errorToast } = useToastHook();
@@ -12,7 +12,7 @@ export const useLogout = () => {
     try {
       const { status } = await axiosInstance.get("/auth/logout");
       if (status === HttpStatus.CREATED) {
-        router.push(isMobile() ? getMobileRoute(Route.LOGIN) : Route.LOGIN);
+        router.push(getRelevantRoute(Route.LOGIN));
       }
     } catch (error: any) {
       return errorToast(

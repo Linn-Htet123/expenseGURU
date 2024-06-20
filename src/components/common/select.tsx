@@ -7,24 +7,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-interface SelectBoxProps extends FieldProps {
-  options: string[];
+interface SelectBoxProps<T> extends FieldProps {
+  options: T[];
   placeholder?: string;
+  fetchMore?: () => void;
+  hasMore?: boolean;
+  dataLength?: number;
+  optionValue?: string;
+  optionName?: string;
 }
-
-const SelectBox = ({
+const SelectBox = <T extends Record<string, any>>({
   options,
   field,
   form,
   placeholder = "Select ...",
-}: SelectBoxProps) => {
+  fetchMore = () => {},
+  hasMore = false,
+  dataLength = 0,
+  optionValue = "_id",
+  optionName = "name",
+}: SelectBoxProps<T>) => {
   const [selectValue, setSelectValue] = useState(field.value || "");
 
   useEffect(() => {
-    if (field.value) {
-      setSelectValue(field.value);
-    }
+    setSelectValue(field.value || undefined);
   }, [field.value]);
 
   const handleChange = (value: string) => {
@@ -43,11 +51,29 @@ const SelectBox = ({
         <SelectValue placeholder={selectValue || placeholder} />
       </SelectTrigger>
       <SelectContent>
-        {options.map((option, index) => (
-          <SelectItem key={index} value={option}>
-            {option}
-          </SelectItem>
-        ))}
+        <div
+          className="w-full h-72 grow overflow-auto scrollbar-hide"
+          id="scrollableDiv"
+        >
+          <InfiniteScroll
+            dataLength={dataLength}
+            next={fetchMore}
+            hasMore={hasMore}
+            loader={<div>Loading...</div>}
+            scrollableTarget="scrollableDiv"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            {options.map((option, index) => (
+              <SelectItem key={index} value={option[optionValue]}>
+                {option[optionName]}
+              </SelectItem>
+            ))}
+          </InfiniteScroll>
+        </div>
       </SelectContent>
     </Select>
   );

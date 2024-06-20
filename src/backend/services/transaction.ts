@@ -97,6 +97,7 @@ export const TransactionService = () => {
     transaction: TransactionCreateObject,
     userId: string
   ) => {
+    console.log(transaction);
     const wallet = await findWalletByUserId(userId);
     const newTransaction = new Transaction({
       ...transaction,

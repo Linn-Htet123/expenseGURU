@@ -10,7 +10,7 @@ const ProfileHead = ({ className }: { className?: string }) => {
       <div className="flex flex-col justify-center items-center font-semibold">
         <Avatar />
         <div className="mt-2">{user.username}</div>
-        <div className="text-[#438883]">{user.email}</div>
+        <div className="text-primaryLight">{user.email}</div>
       </div>
     </div>
   );

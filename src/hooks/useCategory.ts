@@ -42,7 +42,6 @@ export const useCategory = () => {
       const nextPage = prevPage + 1;
       return nextPage;
     });
-    console.log(page);
   };
 
   const createCategory = useCallback(

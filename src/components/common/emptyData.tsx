@@ -9,7 +9,7 @@ const EmptyData = ({ dataName }: { dataName: string }) => {
             <SearchIcon />
           </div>
           <h1 className="mt-3 text-lg text-gray-800">No {dataName} found.</h1>
-          <p className="mt-2 text-gray-500">
+          <p className="mt-2 text-gray-500 text-wrap overflow-hidden w-full">
             There is no data yet. Please add more {dataName}.
           </p>
         </div>

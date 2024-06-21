@@ -50,11 +50,10 @@ export const useLogin = () => {
         router.push(getRelevantRoute(Route.HOME));
       }
     } catch (error: any) {
+      setLoading(false);
       return errorToast(
         error.response.data.message || error.response.data.error
       );
-    } finally {
-      setLoading(false);
     }
   };
 

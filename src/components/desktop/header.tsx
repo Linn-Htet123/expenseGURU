@@ -8,12 +8,11 @@ import {
 } from "@/components/ui/popover";
 import { useLogin } from "@/hooks/useLogin";
 import { Route } from "@/enums/route";
-import Lottie from "lottie-react";
-import Logo from "@/lotties/desktop_logo.json";
 import Logout from "../common/logout";
 
 const Header = () => {
-  const { user } = useLogin();
+  const { authUser } = useLogin();
+
   return (
     <header className="flex items-center justify-between px-4 py-3 shadow-md bg-white border-secondary sticky top-0 z-50 text-white">
       <Link
@@ -37,8 +36,8 @@ const Header = () => {
           <PopoverContent className="p-4 w-56 mr-1">
             <div className="w-full">
               <div className="space-y-1">
-                <p className="font-medium">{user.username}</p>
-                <p className="text-primaryLight">{user.email}</p>
+                <p className="font-medium">{authUser.username}</p>
+                <p className="text-primaryLight">{authUser.email}</p>
               </div>
               <div className="border-t border-gray-200 my-2" />
               <Logout />

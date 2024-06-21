@@ -28,7 +28,7 @@ const HomePage = () => {
   dayjs.extend(greetPlugin);
 
   const [data, setData] = useState<ExpenseItem[]>([]);
-  const { user } = useLogin();
+  const { authUser } = useLogin();
 
   const generateRandomData = (): ExpenseItem[] => {
     const categories = ["Movies", "Shopping", "Dining", "Travel", "Utilities"];
@@ -52,13 +52,14 @@ const HomePage = () => {
     const data = generateRandomData();
     setData(data);
   }, []);
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center h-dvh overflow-hidden">
         <div className="flex justify-between text-white p-4 absolute top-2 left-0 w-full z-50">
           <div>
             <Greeting className="text-sm" />
-            <div className="text-xl font-semibold">{user.username}</div>
+            <div className="text-xl font-semibold">{authUser.username}</div>
           </div>
           <div>
             <div>

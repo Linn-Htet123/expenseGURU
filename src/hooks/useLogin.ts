@@ -1,19 +1,25 @@
 import { SignInType } from "@/validations/sign-in";
-import { useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import axiosInstance from "@/lib/axios";
 import { Route } from "@/enums/route";
 import { useToastHook } from "./useToastHook";
 import { HttpStatus } from "@/backend/enums/httpStatus";
 import { getRelevantRoute } from "@/utils/frontend/route";
+import { AuthContext } from "@/components/context/AuthContext";
+
+export interface User {
+  username: string;
+  email: string;
+}
+
 export const useLogin = () => {
   const { errorToast } = useToastHook();
   const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
-  const [user, setUser] = useState<{ username: ""; email: "" }>({
-    username: "",
-    email: "",
-  });
+  const { authUser, setAuthUser } = useContext(AuthContext);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
   const setLoggedInUserData = async () => {
     try {
       const {
@@ -24,6 +30,7 @@ export const useLogin = () => {
         email: data.email,
       };
       localStorage.setItem("userData", JSON.stringify(userData));
+      setAuthUser(userData);
       return userData;
     } catch (error) {
       console.log(error);
@@ -35,18 +42,28 @@ export const useLogin = () => {
     try {
       const userData = localStorage.getItem("userData");
       if (userData) {
-        setUser(JSON.parse(userData));
+        setIsLoggedIn(true);
+        return JSON.parse(userData);
       }
     } catch (error) {
       console.log(error);
+      return null;
     }
   };
+
+  const removeLoggedInUserData = () => {
+    setIsLoggedIn(false);
+    setAuthUser({ username: "", email: "" });
+    localStorage.removeItem("userData");
+  };
+
   const login = async (user: SignInType) => {
     try {
       setLoading(true);
       const { status } = await axiosInstance.post("/auth/signin", user);
       if (status === HttpStatus.CREATED) {
         await setLoggedInUserData();
+        setIsLoggedIn(true);
         router.push(getRelevantRoute(Route.HOME));
       }
     } catch (error: any) {
@@ -57,14 +74,12 @@ export const useLogin = () => {
     }
   };
 
-  useEffect(() => {
-    getLoggedInUserData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   return {
     login,
     loading,
-    user,
+    authUser,
+    isLoggedIn,
+    getLoggedInUserData,
+    removeLoggedInUserData,
   };
 };

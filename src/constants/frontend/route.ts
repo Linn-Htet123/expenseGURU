@@ -8,12 +8,13 @@ import WalletActive from "../../../public/footerIcon/wallet-active.svg";
 import User from "../../../public/footerIcon/user.svg";
 import UserActive from "../../../public/footerIcon/user-active.svg";
 import AddIcon from "../../../public/footerIcon/add-icon.svg";
+
 import {
-  FileIcon,
   HomeIcon,
   LayersIcon,
   LayoutGridIcon,
   SettingsIcon,
+  WalletIcon,
 } from "@/components/desktop/icon";
 
 export const MOBILE_HOME_PAGE = "/mobile";
@@ -68,12 +69,12 @@ export const DESKTOP_SIDE_MENU = [
   {
     name: "Transactions",
     route: Route.TRANSACTIONS,
-    icon: FileIcon,
+    icon: LayersIcon,
   },
   {
     name: "Wallet",
     route: Route.WALLET,
-    icon: LayersIcon,
+    icon: WalletIcon,
   },
   {
     name: "Profile",

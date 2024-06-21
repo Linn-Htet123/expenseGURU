@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button } from "../ui/button";
+import { Button, buttonVariants } from "../ui/button";
 import { ExitIcon } from "@radix-ui/react-icons";
 import { DESKTOP_SIDE_MENU } from "@/constants/frontend/route";
-import { buttonVariants } from "../ui/button";
 import { cn } from "@/lib/utils";
 
 const SideMenu = () => {

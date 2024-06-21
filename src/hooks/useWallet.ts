@@ -8,7 +8,7 @@ export const useWallet = () => {
   const getBalance = async () => {
     try {
       const response = await axiosInstance.get("/wallet");
-      setTotalBalance(response.data.data.totalBalance);
+      setTotalBalance(response.data.data.totalBalance || 0);
     } catch (error: any) {
       return errorToast(
         error.response.data.message || error.response.data.error

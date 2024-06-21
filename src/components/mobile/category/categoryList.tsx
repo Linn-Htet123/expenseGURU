@@ -1,6 +1,4 @@
-import { useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import {
   Popover,
   PopoverContent,
@@ -34,8 +32,6 @@ const CategoryList = () => {
   const [currentEditCategoryId, setCurrentEditCategoryId] =
     useState<string>("");
   const [openPopoverId, setOpenPopoverId] = useState<string | null>(null);
-  const router = useRouter();
-
   const handleCreate = async (category: CategoryType) => {
     await createCategory(category);
     setIsCreateDialogOpen(false);
@@ -83,7 +79,7 @@ const CategoryList = () => {
             dataLength={categories.length}
             next={fetchMore}
             hasMore={hasMore}
-            loader={<ListSkeleton />}
+            loader={<span>Loading..</span>}
             scrollableTarget="scrollableDiv"
             style={{
               display: "flex",
@@ -93,7 +89,10 @@ const CategoryList = () => {
           >
             {categories.length > 0 ? (
               categories.map((category) => (
-                <Card key={category._id} className="w-full mb-3">
+                <div
+                  key={category._id}
+                  className="w-full mb-3 border-b border-secondary"
+                >
                   <CardContent className="flex justify-between items-center p-3">
                     <p className="font-medium">{category.name}</p>
                     <Popover
@@ -140,7 +139,7 @@ const CategoryList = () => {
                       </PopoverContent>
                     </Popover>
                   </CardContent>
-                </Card>
+                </div>
               ))
             ) : (
               <EmptyData dataName="categories" />

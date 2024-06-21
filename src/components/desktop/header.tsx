@@ -25,7 +25,7 @@ const Header = () => {
           animationData={Logo}
           style={{ width: "50px", height: "50px" }}
         /> */}
-        <span className="text-xl font-semibold text-[#438883]">
+        <span className="text-xl font-semibold text-primaryLight">
           Expense GURU
         </span>
       </Link>
@@ -38,7 +38,7 @@ const Header = () => {
             <div className="w-full">
               <div className="space-y-1">
                 <p className="font-medium">{user.username}</p>
-                <p className="text-[#438883]">{user.email}</p>
+                <p className="text-primaryLight">{user.email}</p>
               </div>
               <div className="border-t border-gray-200 my-2" />
               <Logout />

@@ -4,14 +4,14 @@ const getGreet = (date: Dayjs): string => {
   const hour = Number(date.format("H"));
   const day = date.day();
 
-  const splitAfternoon = 12; // 24hr time to split the afternoon
-  const splitEvening = 18; // 24hr time to split the evening
-  const splitNight = 22; // 24hr time to split the night
+  const splitMorningEnd = 12; // 12 PM is the end of morning
+  const splitAfternoonEnd = 15; // 3 PM is the end of afternoon
+  const splitEveningEnd = 19; // 7 PM is the end of evening
 
-  const isMorning = 5 <= hour && hour < splitAfternoon;
-  const isAfternoon = splitAfternoon <= hour && hour < splitEvening;
-  const isEvening = splitEvening <= hour && hour < splitNight;
-  const isNight = hour >= splitNight || hour < 5;
+  const isMorning = 3 <= hour && hour < splitMorningEnd;
+  const isAfternoon = splitMorningEnd <= hour && hour < splitAfternoonEnd;
+  const isEvening = splitAfternoonEnd <= hour && hour < splitEveningEnd;
+  const isNight = hour >= splitEveningEnd || hour < 3;
 
   const isFridayAfternoon = day === 5 && (isAfternoon || isEvening);
   const isSaturdayMorning = day === 6 && isMorning;

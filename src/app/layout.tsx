@@ -3,6 +3,7 @@ import { Inter as FontSans } from "next/font/google";
 import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import NextTopLoader from "nextjs-toploader";
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -26,6 +27,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
+        <NextTopLoader color="#59bfbf" speed={300} showSpinner={false} />
         {children}
         <Toaster />
       </body>

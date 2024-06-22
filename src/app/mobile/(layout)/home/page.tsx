@@ -35,7 +35,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <div className="flex flex-col items-center justify-center h-dvh overflow-hidden">
         <div className="flex justify-between text-white p-4 absolute top-2 left-0 w-full z-50">
           <div>
@@ -78,7 +78,7 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

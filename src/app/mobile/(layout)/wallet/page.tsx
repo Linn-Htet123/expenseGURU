@@ -12,6 +12,7 @@ import Link from "next/link";
 import { Route } from "@/enums/route";
 import { getMobileRoute } from "@/utils/frontend/route";
 import TotalBalance from "@/components/common/totalBalance";
+import TransactionList from "@/components/mobile/transaction/transactionList";
 const Wallet = () => {
   return (
     <div className="w-full h-full flex flex-col">
@@ -54,8 +55,8 @@ const WalletList = () => {
           onSelectionChange={handleTabChange}
         />
       </div>
-      <div className="grow bg-slate-100 w-full">
-        <ScrollArea>History here</ScrollArea>
+      <div className="grow overflow-scroll w-full">
+        <TransactionList />
       </div>
     </div>
   );

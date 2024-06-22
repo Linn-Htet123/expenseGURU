@@ -1,12 +1,12 @@
 "use client";
-import DesktopAuthWrapper from "@/components/common/desktopAuthWrapper";
+import AuthLayout from "@/components/desktop/layout/AuthLayout";
 import LoginForm from "@/components/common/loginForm";
 import LoginImage from "@/lotties/desktop_login_image.json";
 import Lottie from "lottie-react";
 
 export default function Login() {
   return (
-    <DesktopAuthWrapper
+    <AuthLayout
       image={
         <Lottie
           animationData={LoginImage}
@@ -15,6 +15,6 @@ export default function Login() {
       }
     >
       <LoginForm className="w-[80%]" />
-    </DesktopAuthWrapper>
+    </AuthLayout>
   );
 }

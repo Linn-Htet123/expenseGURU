@@ -7,7 +7,7 @@ import { useLogin } from "@/hooks/useLogin";
 import Image from "next/image";
 
 const Home = () => {
-  const { user } = useLogin();
+  const { authUser } = useLogin();
   const financeCards = [
     {
       label: "Total balance",
@@ -39,7 +39,7 @@ const Home = () => {
         <div className="z-50 absolute p-5 w-full">
           <div className="text-white">
             <Greeting className="text-xl font-semibold" />
-            <div className="text-lg">{user.username}</div>
+            <div className="text-lg">{authUser.username}</div>
           </div>
           <div className="absolute top-24 left-0 flex justify-between gap-8 w-full mx-auto px-4">
             {financeCards.map((card, index) => (

@@ -1,6 +1,6 @@
 import React from "react";
 
-const DesktopAuthWrapper = ({
+const AuthLayout = ({
   children,
   image,
 }: {
@@ -19,4 +19,4 @@ const DesktopAuthWrapper = ({
   );
 };
 
-export default DesktopAuthWrapper;
+export default AuthLayout;

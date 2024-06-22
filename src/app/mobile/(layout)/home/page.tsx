@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import WithSuspense from "@/components/common/withSuspense";
 
 const HomePage = () => {
-  const { user } = useLogin();
+  const { authUser } = useLogin();
   const imageRef = useRef<HTMLImageElement>(null);
   const [listHeight, setImageHeight] = useState(0);
 
@@ -42,7 +42,7 @@ const HomePage = () => {
           <div className="flex justify-between text-white p-4 absolute top-2 left-0 w-full z-50">
             <div>
               <Greeting className="text-sm" />
-              <div className="text-xl font-semibold">{user.username}</div>
+              <div className="text-xl font-semibold">{authUser.username}</div>
             </div>
             <div>
               <div>

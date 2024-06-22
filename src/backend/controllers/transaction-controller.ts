@@ -68,11 +68,12 @@ export const TransactionController = () => {
         return HttpBadRequestHandler(validatedResult);
       }
 
-      await save(body, userId);
+      const transaction = await save(body, userId);
 
       return HttpCreatedHandler({
-        responseMessage: "Transaction created successfully",
+        message: "Transaction created successfully",
         success: true,
+        body: transaction,
       });
     } catch (error: any) {
       return HttpBadRequestHandler({ error: error.message });
@@ -84,7 +85,7 @@ export const TransactionController = () => {
       const transactionId = await chunkUrl(request);
       await deleteTransactionById(transactionId);
       return HttpCreatedHandler({
-        responseMessage: "Transaction deleted successfully",
+        message: "Transaction deleted successfully",
         success: true,
       });
     } catch (error: any) {

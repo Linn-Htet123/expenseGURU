@@ -12,6 +12,8 @@ import {
 import { Route } from "./enums/route";
 
 const publicPaths = [
+  "/",
+  "/mobile/",
   "/login",
   "/signup",
   "/welcome",

@@ -5,7 +5,7 @@ import Loading from "@/lotties/landing_loading.json";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { Route } from "@/enums/route";
-import { getMobileRoute, isMobile } from "@/utils/frontend/route";
+import { getRelevantRoute, isMobile } from "@/utils/frontend/route";
 
 const Landing = () => {
   const [loading, setLoading] = useState(true);
@@ -21,7 +21,11 @@ const Landing = () => {
 
   useEffect(() => {
     if (!loading) {
-      router.push(isMobile() ? getMobileRoute(Route.WELCOME) : Route.HOME);
+      router.push(
+        isMobile()
+          ? getRelevantRoute(Route.WELCOME)
+          : getRelevantRoute(Route.HOME)
+      );
     }
   }, [loading]);
 

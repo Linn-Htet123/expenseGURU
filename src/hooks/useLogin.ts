@@ -1,12 +1,12 @@
 import { SignInType } from "@/validations/sign-in";
-import { useContext, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
-import { Route } from "@/enums/route";
 import { useToastHook } from "./useToastHook";
 import { HttpStatus } from "@/backend/enums/httpStatus";
+import { useRouter } from "next/navigation";
 import { getRelevantRoute } from "@/utils/frontend/route";
 import { AuthContext } from "@/components/context/AuthContext";
+import { Route } from "@/enums/route";
 
 export interface User {
   username: string;
@@ -16,9 +16,9 @@ export interface User {
 export const useLogin = () => {
   const { errorToast } = useToastHook();
   const [loading, setLoading] = useState<boolean>(false);
-  const router = useRouter();
   const { authUser, setAuthUser } = useContext(AuthContext);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const router = useRouter();
 
   const setLoggedInUserData = async () => {
     try {
@@ -64,7 +64,6 @@ export const useLogin = () => {
       if (status === HttpStatus.CREATED) {
         await setLoggedInUserData();
         setIsLoggedIn(true);
-        router.push(getRelevantRoute(Route.HOME));
       }
     } catch (error: any) {
       setLoading(false);
@@ -73,6 +72,13 @@ export const useLogin = () => {
       );
     }
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      router.push(getRelevantRoute(Route.HOME));
+      router.refresh();
+    }
+  }, [isLoggedIn]);
 
   return {
     login,

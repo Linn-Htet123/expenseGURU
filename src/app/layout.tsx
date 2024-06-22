@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
+import { AuthProvider } from "@/components/provider/AuthProvider";
+
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
@@ -28,7 +30,7 @@ export default function RootLayout({
         )}
       >
         <NextTopLoader color="#59bfbf" speed={300} showSpinner={false} />
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <Toaster />
       </body>
     </html>

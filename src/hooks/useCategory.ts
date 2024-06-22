@@ -16,9 +16,7 @@ export const useCategory = () => {
   const fetchCategories = useCallback(
     async (page = 1) => {
       try {
-        const response = await axiosInstance.get(
-          `/category?page=${page}&limit=10`
-        );
+        const response = await axiosInstance.get(`/category?page=${page}`);
         const data = response.data.data.data;
         if (page === 1) {
           setCategories(data);

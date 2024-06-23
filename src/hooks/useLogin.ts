@@ -3,10 +3,11 @@ import { useContext, useEffect, useState } from "react";
 import axiosInstance from "@/lib/axios";
 import { useToastHook } from "./useToastHook";
 import { HttpStatus } from "@/backend/enums/httpStatus";
-import { AuthContext } from "@/components/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { getRelevantRoute } from "@/utils/frontend/route";
+import { AuthContext } from "@/components/context/AuthContext";
 import { Route } from "@/enums/route";
+
 export interface User {
   username: string;
   email: string;

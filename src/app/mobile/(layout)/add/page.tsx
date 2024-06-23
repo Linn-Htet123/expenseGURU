@@ -1,12 +1,15 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Bg from "../../../../../public/home-bg.png";
 import { Button } from "@/components/ui/button";
 import SegmentedControl from "@/components/ui/segmented-button";
 import { Label } from "@/components/ui/label";
-import { Form, Formik } from "formik";
-import { TransactionValidation } from "@/validations/income-expense";
+import { Form, Formik, FormikHelpers } from "formik";
+import {
+  TransactionType,
+  TransactionValidation,
+} from "@/validations/income-expense";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import { FormField } from "@/components/common/formField";
 import { Input } from "@/components/ui/input";
@@ -19,6 +22,8 @@ import AddIcon from "../../../../../public/footerIcon/add-icon.svg";
 import Link from "next/link";
 import { Route } from "@/enums/route";
 import { getMobileRoute } from "@/utils/frontend/route";
+import { useCategory } from "@/hooks/useCategory";
+import { Categories } from "@/types/category";
 
 const Add = () => {
   return (
@@ -36,14 +41,33 @@ const Add = () => {
 };
 
 const TransactionForm = () => {
-  const { handleSubmit } = useTransaction();
+  const { createTransaction } = useTransaction();
+  const { categories, fetchMore, hasMore } = useCategory();
   const { handleTabChange, currentTab, currentParams } = useTab();
+
+  const [initialValues, setInitialValues] = useState<TransactionType>({
+    category: "",
+    amount: "",
+  });
+
+  const handleSubmit = async (
+    values: TransactionType,
+    { resetForm }: FormikHelpers<TransactionType>
+  ) => {
+    await createTransaction(values);
+    setInitialValues({ category: "", amount: "" });
+    resetForm();
+  };
 
   const getButtonText = () => {
     return currentParams === TransactionTab.EXPENSE
       ? TransactionTab.EXPENSE
       : TransactionTab.INCOME;
   };
+
+  useEffect(() => {
+    setInitialValues({ category: "", amount: "" });
+  }, [currentParams]);
 
   return (
     <>
@@ -53,11 +77,9 @@ const TransactionForm = () => {
         onSelectionChange={handleTabChange}
       />
       <Formik
-        initialValues={{
-          category: "",
-          amount: "",
-        }}
+        initialValues={initialValues}
         validationSchema={toFormikValidationSchema(TransactionValidation)}
+        enableReinitialize={true}
         onSubmit={handleSubmit}
       >
         <Form>
@@ -79,7 +101,10 @@ const TransactionForm = () => {
               name="category"
               id="category"
               placeholder="Select Category ..."
-              options={["School", "Gym", "Netflix"]}
+              options={categories}
+              fetchMore={fetchMore}
+              hasMore={hasMore}
+              dataLength={categories.length}
             />
           </div>
           <div className="px-4 mt-4 w-full flex flex-col gap-3">

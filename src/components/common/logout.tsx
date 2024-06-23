@@ -9,7 +9,7 @@ const Logout = () => {
   };
   return (
     <div
-      className="flex items-center text-red-700 cursor-pointer hover:bg-secondary p-2 rounded-sm font-medium"
+      className="flex items-center text-red-700 cursor-pointer hover:bg-secondary rounded-sm font-medium"
       onClick={handleLogout}
     >
       <span>Logout</span>

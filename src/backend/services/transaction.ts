@@ -3,6 +3,7 @@ import { transformToObjectId } from "../helpers/helper";
 import { TransactionCreateObject } from "../types/transaction";
 import { CategoryService } from "./category";
 import { WalletService } from "./wallet";
+import Wallet from "../db/models/wallet";
 
 const {
   findByUserId: findWalletByUserId,
@@ -141,5 +142,52 @@ export const TransactionService = () => {
     }
   };
 
-  return { getAll, findOne, save, deleteTransactionById, changeCategory };
+  const getWalletIdByUsername = async (userId: string) => {
+    const wallet = await Wallet.findOne({ userId });
+    if (!wallet) {
+      throw new Error("wallet not found");
+    }
+    return wallet._id;
+  };
+  const getTotalTransactions = async (userId: string, type: string) => {
+    try {
+      const walletId = await getWalletIdByUsername(userId);
+      const results = await Transaction.aggregate([
+        { $match: { walletId, type } },
+        {
+          $group: {
+            _id: "$type",
+            totalAmount: { $sum: "$amount" },
+          },
+        },
+      ]);
+
+      const formattedResults = results.reduce((acc, item) => {
+        acc[item._id] = item.totalAmount;
+        return acc;
+      }, {});
+
+      return formattedResults;
+    } catch (err: any) {
+      throw new Error(err.message);
+    }
+  };
+
+  const getTotalIncome = async (userId: string) => {
+    return await getTotalTransactions(userId, "income");
+  };
+
+  const getTotalExpense = async (userId: string) => {
+    return await getTotalTransactions(userId, "expense");
+  };
+
+  return {
+    getAll,
+    findOne,
+    save,
+    deleteTransactionById,
+    changeCategory,
+    getTotalExpense,
+    getTotalIncome,
+  };
 };

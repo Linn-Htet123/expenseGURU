@@ -16,6 +16,8 @@ import TotalBalance from "@/components/common/totalBalance";
 import TransactionList from "@/components/mobile/transaction/transactionList";
 import { useEffect, useRef, useState } from "react";
 import WithSuspense from "@/components/common/withSuspense";
+import TotalIncome from "@/components/common/totalIncome";
+import TotalExpense from "@/components/common/totalExpense";
 
 const HomePage = () => {
   const { authUser } = useLogin();
@@ -101,14 +103,14 @@ const HomeCard = () => {
               <span className="text-sm text-slate-300">Income</span>
               <Image src={IncomeArrow} alt="income show arrow" />
             </div>
-            <span className="text-xl font-semibold">30000</span>
+            <TotalIncome className="text-xl font-semibold" />
           </div>
           <div className="flex flex-col">
             <div className="flex gap-2 items-center">
               <span className="text-sm text-slate-300">Expense</span>
               <Image src={ExpenseArrow} alt="income show arrow" />
             </div>
-            <span className="text-xl font-semibold">30000</span>
+            <TotalExpense className="text-xl font-semibold" />
           </div>
         </div>
       </div>

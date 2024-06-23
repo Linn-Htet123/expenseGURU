@@ -57,6 +57,7 @@ export const TransactionService = () => {
         path: "category",
         select: "name -_id",
       })
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(limit);
 

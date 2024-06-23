@@ -1,9 +1,12 @@
 import EmptyData from "@/components/common/emptyData";
 import FormattedTransactionAmount from "@/components/common/formattedTransactionAmount";
 import ListSkeleton from "@/components/common/listSkeleton";
+import { Route } from "@/enums/route";
 import { useTransaction } from "@/hooks/useTransaction";
 import { Transaction } from "@/types/transaction";
+import { getRelevantRoute } from "@/utils/frontend/route";
 import dayjs from "dayjs";
+import Link from "next/link";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 const TransactionList = ({
@@ -37,8 +40,9 @@ const TransactionList = ({
         >
           {transactions.length > 0 ? (
             transactions.map((item: Transaction, index: number) => (
-              <div
-                key={`item-${index}`}
+              <Link
+                href={`${getRelevantRoute(Route.TRANSACTION)}/${item._id}`}
+                key={`item-${index}-${item._id}`}
                 className="flex justify-between w-full items-center border-b border-slate-100 my-1"
               >
                 <div className="flex flex-col py-2">
@@ -53,7 +57,7 @@ const TransactionList = ({
                   amount={item.amount}
                   type={item.type}
                 />
-              </div>
+              </Link>
             ))
           ) : (
             <EmptyData dataName="transactions" />

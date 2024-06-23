@@ -12,6 +12,7 @@
     --popover-foreground: #161c1c; /* 176 95% 10% */
     --primary: #59bfbf; /* 176 30.2% 50% */
     --primary-dark: #488d88;
+    --primary-transparent: #e6f7f7;
     --primary-light: #438883;
     --primary-foreground: #ffffff; /* 0 0% 100% */
     --secondary: #e6f7f7; /* 176 10% 90% */
@@ -21,6 +22,7 @@
     --accent: #e6f7f7; /* 138 10% 90% */
     --accent-foreground: #262626; /* 176 0% 15% */
     --destructive: #bf4040; /* 0 50% 50% */
+    --destructive-transparent: #ff8a8a38;
     --destructive-foreground: #ffffff; /* 176 0% 100% */
     --border: #cce4e4; /* 176 20% 82% */
     --input: #599f9f; /* 176 20% 50% */

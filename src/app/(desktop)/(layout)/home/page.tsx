@@ -17,13 +17,13 @@ const Home = () => {
     {
       label: "Income",
       img: { src: "/income-icon.png", alt: "Income icon" },
-      badgeClass: "bg-[#e6f7f7]",
+      badgeClass: "bg-primary-transparent",
       children: <TotalBalance />,
     },
     {
       label: "Expense",
       img: { src: "/expense-icon.png", alt: "Expense icon" },
-      badgeClass: "bg-[#FF8A8A38]",
+      badgeClass: "bg-destructive-transparent",
       children: <TotalBalance />,
     },
   ];

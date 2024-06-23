@@ -15,7 +15,7 @@ const FinanceCard = ({
   badgeClass = "bg-[#edf4f3]",
 }: Props) => {
   return (
-    <Card className="w-full p-5 flex justify-between items-start shadow-md">
+    <Card className="w-full p-5 flex justify-between items-start shadow-sm">
       <div>
         <span className="font-normal text-md mb-2">{label}</span>
         {children}

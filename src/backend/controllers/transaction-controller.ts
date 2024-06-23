@@ -21,6 +21,8 @@ const {
   getAll: getAllTransaction,
   changeCategory: changeTransactionsCategory,
   findOne,
+  getTotalExpense: getTotalSumOfExpense,
+  getTotalIncome: getTotalSumOfIncome,
 } = TransactionService();
 
 const { findById: findCategoryById } = CategoryService();
@@ -148,5 +150,39 @@ export const TransactionController = () => {
     }
   };
 
-  return { getAll, create, deleteTransaction, changeCategory, getDetails };
+  const getTotalExpense = async (request: NextRequest) => {
+    try {
+      const userId = request.headers.get("userId")!;
+      const response = await getTotalSumOfExpense(userId);
+      return HttpCreatedHandler({
+        success: true,
+        data: response,
+      });
+    } catch (error: any) {
+      return HttpBadRequestHandler({ error: error.message });
+    }
+  };
+
+  const getTotalIncome = async (request: NextRequest) => {
+    try {
+      const userId = request.headers.get("userId")!;
+      const response = await getTotalSumOfIncome(userId);
+      return HttpCreatedHandler({
+        success: true,
+        data: response,
+      });
+    } catch (error: any) {
+      return HttpBadRequestHandler({ error: error.message });
+    }
+  };
+
+  return {
+    getAll,
+    create,
+    deleteTransaction,
+    changeCategory,
+    getDetails,
+    getTotalExpense,
+    getTotalIncome,
+  };
 };

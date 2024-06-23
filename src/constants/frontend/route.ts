@@ -68,7 +68,7 @@ export const DESKTOP_SIDE_MENU = [
   },
   {
     name: "Transactions",
-    route: Route.TRANSACTIONS,
+    route: Route.TRANSACTION,
     icon: LayersIcon,
   },
   {

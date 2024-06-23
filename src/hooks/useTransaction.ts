@@ -19,9 +19,7 @@ export const useTransaction = () => {
   const fetchTransactions = useCallback(
     async (page = 1) => {
       try {
-        const response = await axiosInstance.get(
-          `/transaction?page=${page}&limit=10`
-        );
+        const response = await axiosInstance.get(`/transaction?page=${page}`);
         const data = response.data.data.data;
         if (page === 1) {
           setTransactions(data);

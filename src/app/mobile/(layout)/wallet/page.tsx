@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import SegmentedControl from "@/components/ui/segmented-button";
 import IncomeArrow from "../../../../../public/income-arrow.png";
 import ExpenseArrow from "../../../../../public/expense-arrow.png";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { useTab } from "@/hooks/useTab";
 import WithSuspense from "@/components/common/withSuspense";
 import Link from "next/link";
@@ -27,7 +26,7 @@ const Wallet = () => {
 };
 
 const WalletList = () => {
-  const { handleTabChange, currentTab, currentParams } = useTab();
+  const { handleTabChange, currentTab } = useTab();
   return (
     <div className="h-[90%] w-full  bg-slate-50 absolute bottom-0 rounded-t-[30px] px-4 py-5 flex flex-col items-center justify-start">
       <span className="mb-1 text-slate-500">Total balance</span>

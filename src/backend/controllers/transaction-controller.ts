@@ -11,6 +11,7 @@ import { WalletService } from "../services/wallet";
 import { chunkUrl } from "../helpers/chunk-url";
 import { changeCategoryValidation } from "@/validations/transaction/change-category";
 import { connect } from "@/backend/db/db.connect";
+import { CategoryService } from "../services/category";
 
 connect();
 
@@ -19,7 +20,10 @@ const {
   deleteTransactionById,
   getAll: getAllTransaction,
   changeCategory: changeTransactionsCategory,
+  findOne,
 } = TransactionService();
+
+const { findById: findCategoryById } = CategoryService();
 const { findByUserId: findWalletByUserId } = WalletService();
 
 export const TransactionController = () => {
@@ -56,6 +60,34 @@ export const TransactionController = () => {
       });
     } catch (error: any) {
       return HttpBadRequestHandler({ error: error.message });
+    }
+  };
+
+  const getDetails = async (request: NextRequest) => {
+    try {
+      const transactionId = await chunkUrl(request);
+
+      let transaction = await findOne({ _id: transactionId });
+      let category = await findCategoryById(transaction.category);
+      const response = {
+        _id: transaction._id,
+        amount: transaction.amount,
+        type: transaction.type,
+        createdAt: transaction.createdAt,
+        updatedAt: transaction.updatedAt,
+        category: category.name,
+      };
+
+      return HttpCreatedHandler({
+        success: true,
+        data: response,
+      });
+    } catch (error: any) {
+      return {
+        status: 500,
+        success: false,
+        message: error.message || "An error occurred",
+      };
     }
   };
 
@@ -116,5 +148,5 @@ export const TransactionController = () => {
     }
   };
 
-  return { getAll, create, deleteTransaction, changeCategory };
+  return { getAll, create, deleteTransaction, changeCategory, getDetails };
 };

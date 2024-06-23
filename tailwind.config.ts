@@ -40,12 +40,20 @@ const config: Config = {
           DEFAULT: "var(--primary-light)",
           foreground: "var(--primary-foreground)",
         },
+        "primary-transparent": {
+          DEFAULT: "var(--primary-transparent)",
+          foreground: "var(--primary-foreground)",
+        },
         secondary: {
           DEFAULT: "var(--secondary)",
           foreground: "var(--secondary-foreground)",
         },
         destructive: {
           DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
+        },
+        "destructive-transparent": {
+          DEFAULT: "var(--destructive-transparent)",
           foreground: "var(--destructive-foreground)",
         },
         muted: {

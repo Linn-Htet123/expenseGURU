@@ -7,6 +7,10 @@ import WithSuspense from "@/components/common/withSuspense";
 import { useTransactionDetails } from "@/hooks/useTransactionDetails";
 import dayjs from "dayjs";
 import { Separator } from "@/components/ui/separator";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { getRelevantRoute } from "@/utils/frontend/route";
+import { Route } from "@/enums/route";
 
 interface TransactionDetailsProps {
   params: { id: string };
@@ -36,7 +40,7 @@ const TransactionDetails = ({ params: { id } }: TransactionDetailsProps) => {
         <Image src={Bg} alt="background" className="w-screen" />
         <WithSuspense>
           {transactionDetails && (
-            <div className="h-[80%] w-full bg-slate-50 absolute bottom-0 rounded-t-[30px] px-5 py-5 flex flex-col items-center justify-start">
+            <div className="h-[90%] w-full bg-slate-50 absolute bottom-0 rounded-t-[30px] px-5 py-5 flex flex-col items-center justify-between">
               <div className="w-full h-full flex flex-col justify-start items-center">
                 <span
                   className={`${getTransactionTypeClass(
@@ -68,6 +72,9 @@ const TransactionDetails = ({ params: { id } }: TransactionDetailsProps) => {
                 <Separator className="w-full my-6" />
                 <DetailRow label="Total" value={transactionDetails.amount} />
               </div>
+              <Button className="mb-20">
+                <Link href={getRelevantRoute(Route.HOME)}>Back to Home</Link>
+              </Button>
             </div>
           )}
         </WithSuspense>

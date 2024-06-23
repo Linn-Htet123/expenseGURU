@@ -19,6 +19,7 @@ export const useLogin = () => {
   const { authUser, setAuthUser } = useContext(AuthContext);
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const router = useRouter();
+
   const setLoggedInUserData = async () => {
     try {
       const {

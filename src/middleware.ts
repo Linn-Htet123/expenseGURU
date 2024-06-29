@@ -25,6 +25,9 @@ const publicPaths = [
 const redirectTo = (url: string, req: NextRequest) =>
   NextResponse.redirect(new URL(url, req.url));
 
+const getRedirectPath = (route: Route, isMobileDevice: boolean) =>
+    isMobileDevice ? getMobileRoute(route) : route;
+
 export default async function middleware(req: NextRequest) {
   const userAgent = req.headers.get("user-agent") ?? "";
   const { pathname } = new URL(req.url);
@@ -45,20 +48,14 @@ export default async function middleware(req: NextRequest) {
     }
   }
   if (isPublicPath && token) {
-    const redirectPath = `${
-      isMobileDevice ? getMobileRoute(Route.HOME) : Route.HOME
-    }`;
-    return redirectTo(redirectPath, req);
+    return redirectTo(getRedirectPath(Route.HOME, <boolean>isMobileDevice), req);
   }
 
   if (!token && !isPublicPath && !isAPIRoute(pathname)) {
     if (pathname === MOBILE_HOME_PAGE || pathname === DESKTOP_HOME_PAGE) {
       return NextResponse.next();
     }
-    const redirectPath = `${
-      isMobileDevice ? getMobileRoute(Route.LOGIN) : Route.LOGIN
-    }`;
-    return redirectTo(redirectPath, req);
+    return redirectTo(getRedirectPath(Route.LOGIN, <boolean>isMobileDevice), req);
   }
 
   return NextResponse.next();

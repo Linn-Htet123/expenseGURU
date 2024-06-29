@@ -1,7 +1,7 @@
 import { Categories } from "@/types/category";
 import { CategoryType } from "@/validations/category/create";
 import axiosInstance from "@/lib/axios";
-import { useEffect, useState, useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { HttpStatus } from "@/backend/enums/httpStatus";
 import { useToastHook } from "./useToastHook";
 
@@ -26,19 +26,18 @@ export const useCategory = () => {
         setHasMore(data.length > 0);
       } catch (error: any) {
         return errorToast(
-          error.response.data.message || error.response.data.error
+          error.response.data.message || error.response.data.error,
         );
       } finally {
         setIsFetching(false);
       }
     },
-    [errorToast]
+    [errorToast],
   );
 
   const fetchMore = async () => {
     setPage((prevPage) => {
-      const nextPage = prevPage + 1;
-      return nextPage;
+      return prevPage + 1;
     });
   };
 
@@ -55,13 +54,13 @@ export const useCategory = () => {
         }
       } catch (error: any) {
         return errorToast(
-          error.response.data.message || error.response.data.error
+          error.response.data.message || error.response.data.error,
         );
       } finally {
         setLoading(false);
       }
     },
-    [errorToast, successToast]
+    [errorToast, successToast],
   );
 
   const editCategory = useCallback(
@@ -76,20 +75,20 @@ export const useCategory = () => {
         if (response.data.status === HttpStatus.CREATED) {
           setCategories((prevCategories) => {
             return prevCategories.map((category) =>
-              category._id === updatedCategory._id ? updatedCategory : category
+              category._id === updatedCategory._id ? updatedCategory : category,
             );
           });
           return successToast(response.data.message);
         }
       } catch (error: any) {
         return errorToast(
-          error.response.data.message || error.response.data.error
+          error.response.data.message || error.response.data.error,
         );
       } finally {
         setLoading(false);
       }
     },
-    [errorToast, successToast]
+    [errorToast, successToast],
   );
 
   const deleteCategory = useCallback(
@@ -98,20 +97,17 @@ export const useCategory = () => {
         const response = await axiosInstance.delete(`/category/${id}`);
         if (response.data.status === HttpStatus.CREATED) {
           setCategories((prevCategories) => {
-            const filteredCategories = prevCategories.filter(
-              (category) => category._id !== id
-            );
-            return filteredCategories;
+            return prevCategories.filter((category) => category._id !== id);
           });
           return successToast(response.data.message);
         }
       } catch (error: any) {
         return errorToast(
-          error.response.data.message || error.response.data.error
+          error.response.data.message || error.response.data.error,
         );
       }
     },
-    [errorToast, successToast]
+    [errorToast, successToast],
   );
 
   useEffect(() => {

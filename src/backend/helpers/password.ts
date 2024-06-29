@@ -5,13 +5,12 @@ const jwt = require("jsonwebtoken");
 
 export const hashPassword = async (password: string) => {
   const salt = await bcryptjs.genSalt(10);
-  const hashedPassword = await bcryptjs.hash(password, salt);
-  return hashedPassword;
+  return await bcryptjs.hash(password, salt);
 };
 
 export const comparePassword = async (
   password: string,
-  hashedPassword: string
+  hashedPassword: string,
 ) => {
   return await bcryptjs.compare(password, hashedPassword);
 };

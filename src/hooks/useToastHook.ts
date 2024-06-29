@@ -10,7 +10,7 @@ export const useToastHook = () => {
   const showToast = (
     variant: ToastVariant,
     title: string,
-    description?: string
+    description?: string,
   ) => {
     return toast({
       variant,

@@ -12,7 +12,7 @@ export const useTotalExpense = () => {
       setTotalExpense(data.expense || 0);
     } catch (error: any) {
       return errorToast(
-        error.response.data.message || error.response.data.error
+        error.response.data.message || error.response.data.error,
       );
     }
   }, [errorToast]);

@@ -29,19 +29,18 @@ export const useTransaction = () => {
         setHasMore(data.length > 0);
       } catch (error: any) {
         return errorToast(
-          error.response.data.message || error.response.data.error
+          error.response.data.message || error.response.data.error,
         );
       } finally {
         setIsFetching(false);
       }
     },
-    [errorToast]
+    [errorToast],
   );
 
   const fetchMore = async () => {
     setPage((prevPage) => {
-      const nextPage = prevPage + 1;
-      return nextPage;
+      return prevPage + 1;
     });
   };
 
@@ -59,13 +58,13 @@ export const useTransaction = () => {
         }
       } catch (error: any) {
         return errorToast(
-          error.response.data.message || error.response.data.error
+          error.response.data.message || error.response.data.error,
         );
       } finally {
         setLoading(false);
       }
     },
-    [currentParams, errorToast, successToast]
+    [currentParams, errorToast, successToast],
   );
 
   useEffect(() => {

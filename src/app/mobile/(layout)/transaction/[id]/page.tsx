@@ -44,7 +44,7 @@ const TransactionDetails = ({ params: { id } }: TransactionDetailsProps) => {
               <div className="w-full h-full flex flex-col justify-start items-center">
                 <span
                   className={`${getTransactionTypeClass(
-                    transactionDetails.type
+                    transactionDetails.type,
                   )} text-sm px-3 py-1.5 rounded-full mb-2`}
                 >
                   {isIncome(transactionDetails.type) ? "Income" : "Expense"}

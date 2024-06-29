@@ -39,7 +39,7 @@ export const TransactionController = () => {
 
       const validatedResult = validate(
         { page, limit, type, date },
-        getValidation
+        getValidation,
       );
       console.log("validatedResult", validatedResult);
       if (validatedResult) {
@@ -53,7 +53,7 @@ export const TransactionController = () => {
         +page,
         +limit,
         type,
-        date
+        date,
       );
 
       return HttpCreatedHandler({

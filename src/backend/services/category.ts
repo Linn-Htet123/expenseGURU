@@ -3,8 +3,7 @@ import { transformToObjectId } from "../helpers/helper";
 
 export const CategoryService = () => {
   const create = (category: any) => {
-    const newCategory = new Category(category);
-    return newCategory;
+    return new Category(category);
   };
   const save = async (category: any) => {
     await existingCategory(category.userId, category.name);
@@ -48,7 +47,7 @@ export const CategoryService = () => {
     userId: string,
     page = 1,
     limit = 10,
-    search: string | null = null
+    search: string | null = null,
   ) => {
     // Ensure page and limit are numbers and have valid values
     page = Math.max(1, +page);

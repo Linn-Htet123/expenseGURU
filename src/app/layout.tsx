@@ -26,7 +26,7 @@ export default function RootLayout({
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased  p-0 m-0",
-          fontSans.variable
+          fontSans.variable,
         )}
       >
         <NextTopLoader color="#59bfbf" speed={300} showSpinner={false} />

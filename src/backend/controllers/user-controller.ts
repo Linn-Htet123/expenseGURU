@@ -10,7 +10,6 @@ import {
 import {
   comparePassword,
   generateToken,
-  getDataFromToken,
   hashPassword,
 } from "../helpers/password";
 import { signUpValidation } from "@/validations/signup";

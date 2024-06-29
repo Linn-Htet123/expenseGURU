@@ -6,7 +6,7 @@ const WelcomeWrapper = dynamic(
   {
     ssr: false,
     loading: () => <WelcomeSkeleton />,
-  }
+  },
 );
 
 const Welcome = () => {

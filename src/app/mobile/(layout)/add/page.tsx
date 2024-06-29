@@ -23,7 +23,6 @@ import Link from "next/link";
 import { Route } from "@/enums/route";
 import { getMobileRoute } from "@/utils/frontend/route";
 import { useCategory } from "@/hooks/useCategory";
-import { Categories } from "@/types/category";
 
 const Add = () => {
   return (
@@ -52,7 +51,7 @@ const TransactionForm = () => {
 
   const handleSubmit = async (
     values: TransactionType,
-    { resetForm }: FormikHelpers<TransactionType>
+    { resetForm }: FormikHelpers<TransactionType>,
   ) => {
     await createTransaction(values);
     setInitialValues({ category: "", amount: "" });

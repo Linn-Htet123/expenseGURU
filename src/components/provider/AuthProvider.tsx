@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   const memoedValue = useMemo(
     () => ({ isLoggedIn, authUser, setAuthUser }),
-    [authUser, isLoggedIn]
+    [authUser, isLoggedIn],
   );
 
   useEffect(() => {

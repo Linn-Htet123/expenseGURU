@@ -47,7 +47,7 @@ const FormField = <T extends Record<string, any>>({
         optionName={optionName}
         className={cn(
           className,
-          meta.error && meta.touched && "border-red-500"
+          meta.error && meta.touched && "border-red-500",
         )}
         field={field}
         form={form}

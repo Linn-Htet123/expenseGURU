@@ -14,7 +14,7 @@ export const useTab = () => {
     (name: string, value: string) => {
       return createQueryString(name, value, searchParams.toString());
     },
-    [searchParams]
+    [searchParams],
   );
 
   const handleTabChange = (item: string, queryName: string = "tab") => {

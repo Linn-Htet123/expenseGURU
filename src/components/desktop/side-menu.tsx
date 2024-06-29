@@ -21,7 +21,7 @@ const SideMenu = () => {
                 className={cn(
                   buttonVariants({ variant: "ghost", size: "default" }),
                   "gap-3 text-gray-500 hover:text-gray-900 flex items-center justify-start text-base",
-                  isActive && "bg-secondary text-secondary-foreground"
+                  isActive && "bg-secondary text-secondary-foreground",
                 )}
                 prefetch={false}
               >

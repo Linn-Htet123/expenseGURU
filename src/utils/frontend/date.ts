@@ -32,7 +32,7 @@ const getGreet = (date: Dayjs): string => {
 const greetPlugin = (
   option: any,
   dayjsClass: any,
-  dayjsFactory: typeof dayjs
+  dayjsFactory: typeof dayjs,
 ) => {
   // Extend dayjs instance methods
   dayjsClass.prototype.greet = function (): string {

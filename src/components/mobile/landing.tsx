@@ -24,7 +24,7 @@ const Landing = () => {
       router.push(
         isMobile()
           ? getRelevantRoute(Route.WELCOME)
-          : getRelevantRoute(Route.HOME)
+          : getRelevantRoute(Route.HOME),
       );
     }
   }, [loading]);

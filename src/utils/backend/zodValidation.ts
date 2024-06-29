@@ -12,7 +12,7 @@ export const formatZodError = (error: ZodError) => {
 
 export const validate = (
   body: object,
-  validator: ZodObject<ZodRawShape> | ZodEffects<ZodObject<ZodRawShape>>
+  validator: ZodObject<ZodRawShape> | ZodEffects<ZodObject<ZodRawShape>>,
 ) => {
   const parse = validator.safeParse(body);
   if (!parse.success) {

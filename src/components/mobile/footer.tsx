@@ -27,8 +27,8 @@ const Footer = () => {
                   footer.name === "add"
                     ? footer.icon
                     : pathname === getMobileRoute(footer.route)
-                    ? footer.activeIcon
-                    : footer.icon
+                      ? footer.activeIcon
+                      : footer.icon
                 }
                 className="w-[40px] h-[29px]"
                 alt={`${footer.name}`}

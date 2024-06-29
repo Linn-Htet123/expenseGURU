@@ -22,7 +22,7 @@ export const useSignup = () => {
     } catch (error: any) {
       setLoading(false);
       return errorToast(
-        error.response.data.message || error.response.data.error
+        error.response.data.message || error.response.data.error,
       );
     }
   };

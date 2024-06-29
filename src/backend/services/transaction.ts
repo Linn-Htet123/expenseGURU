@@ -17,7 +17,7 @@ export const TransactionService = () => {
     page = 1,
     limit = 10,
     type: string | null = null,
-    date: string | null = null
+    date: string | null = null,
   ) => {
     // Ensure page and limit are numbers and have valid values
     page = Math.max(1, +page);
@@ -38,7 +38,7 @@ export const TransactionService = () => {
       const dateObj = new Date(date);
       const startOfDay = new Date(dateObj.setHours(0, 0, 0, 0)).toISOString();
       const endOfDay = new Date(
-        dateObj.setHours(23, 59, 59, 999)
+        dateObj.setHours(23, 59, 59, 999),
       ).toISOString();
       dateFilter = {
         createdAt: {
@@ -51,7 +51,7 @@ export const TransactionService = () => {
     // Find the categories with pagination
     const cats = await Transaction.find(
       { ...filter, ...dateFilter },
-      { __v: 0 }
+      { __v: 0 },
     )
       .populate({
         path: "category",
@@ -81,8 +81,7 @@ export const TransactionService = () => {
   };
 
   const findOne = async (param: Record<string, string>) => {
-    const transaction = await Transaction.findOne(param);
-    return transaction;
+    return Transaction.findOne(param);
   };
 
   const findById = async (id: string) => {
@@ -97,14 +96,13 @@ export const TransactionService = () => {
 
   const create = async (
     transaction: TransactionCreateObject,
-    userId: string
+    userId: string,
   ) => {
     const wallet = await findWalletByUserId(userId);
-    const newTransaction = new Transaction({
+    return new Transaction({
       ...transaction,
       walletId: wallet._id,
     });
-    return newTransaction;
   };
 
   const save = async (transaction: TransactionCreateObject, userId: string) => {
@@ -113,7 +111,7 @@ export const TransactionService = () => {
     await calculateWalletBalance(
       newTransaction.walletId,
       transaction.amount,
-      transaction.type
+      transaction.type,
     );
     return savedTransaction;
   };
@@ -124,7 +122,7 @@ export const TransactionService = () => {
       await calculateWalletBalance(
         transaction.walletId,
         -transaction.amount,
-        transaction.type
+        transaction.type,
       );
       await transaction.deleteOne();
     } catch (error: any) {
@@ -136,7 +134,7 @@ export const TransactionService = () => {
     try {
       await Transaction.updateMany(
         { walletId: body.walletId, category: body.category },
-        { $set: { category: body.destination_category } }
+        { $set: { category: body.destination_category } },
       );
     } catch (error: any) {
       throw new Error(error.message);
@@ -163,12 +161,10 @@ export const TransactionService = () => {
         },
       ]);
 
-      const formattedResults = results.reduce((acc, item) => {
+      return results.reduce((acc, item) => {
         acc[item._id] = item.totalAmount;
         return acc;
       }, {});
-
-      return formattedResults;
     } catch (err: any) {
       throw new Error(err.message);
     }

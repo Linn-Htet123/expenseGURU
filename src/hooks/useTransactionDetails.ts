@@ -31,13 +31,13 @@ export const useTransactionDetails = () => {
         setTransactionDetails(data);
       } catch (error: any) {
         return errorToast(
-          error.response.data.message || error.response.data.error
+          error.response.data.message || error.response.data.error,
         );
       } finally {
         setIsFetching(false);
       }
     },
-    [errorToast]
+    [errorToast],
   );
 
   return {

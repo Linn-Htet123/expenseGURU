@@ -28,7 +28,7 @@ export const getMobileRoute = (path: Route) => {
 export const createQueryString = (
   name: string,
   value: string,
-  searchParams: string
+  searchParams: string,
 ) => {
   const params = new URLSearchParams(searchParams);
   params.set(name, value);

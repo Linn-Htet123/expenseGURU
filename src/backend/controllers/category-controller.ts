@@ -8,7 +8,7 @@ import { CategoryService } from "../services/category";
 import { NextRequest } from "next/server";
 import { chunkUrl } from "../helpers/chunk-url";
 import { getValidation } from "@/validations/category/get";
-import {withErrorHandling} from "@/backend/helpers/helper";
+import { withErrorHandling } from "@/backend/helpers/helper";
 
 const {
   save: saveCategory,
@@ -43,7 +43,11 @@ const create = withErrorHandling(async (request: NextRequest) => {
 
   const savedCategory = await saveCategory({ ...body, userId });
 
-  return HttpCreatedHandler({ data: savedCategory, message: "Category created successfully", success: true });
+  return HttpCreatedHandler({
+    data: savedCategory,
+    message: "Category created successfully",
+    success: true,
+  });
 });
 
 const update = withErrorHandling(async (request: NextRequest) => {
@@ -57,7 +61,11 @@ const update = withErrorHandling(async (request: NextRequest) => {
   await updateCategory(id, { ...body, userId });
   category.name = body.name;
 
-  return HttpCreatedHandler({ data: category, message: "Category updated successfully", success: true });
+  return HttpCreatedHandler({
+    data: category,
+    message: "Category updated successfully",
+    success: true,
+  });
 });
 
 const deleteCategory = withErrorHandling(async (request: NextRequest) => {
@@ -65,7 +73,10 @@ const deleteCategory = withErrorHandling(async (request: NextRequest) => {
   const userId = request.headers.get("userId")!;
   await deleteCategoryById(id, { userId });
 
-  return HttpCreatedHandler({ message: "Category deleted successfully", success: true });
+  return HttpCreatedHandler({
+    message: "Category deleted successfully",
+    success: true,
+  });
 });
 
 export const CategoryController = () => {

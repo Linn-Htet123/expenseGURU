@@ -35,5 +35,5 @@ export const getValidation = z
     {
       message: "Date must be valid date",
       path: ["date"],
-    }
+    },
   );

@@ -18,13 +18,12 @@ export const WalletService = () => {
     amount = type === TransactionType.EXPENSE ? -amount : amount;
     await Wallet.findOneAndUpdate(
       { _id: objectId },
-      { $inc: { totalBalance: amount } }
+      { $inc: { totalBalance: amount } },
     );
   };
 
   const create = (wallet: any) => {
-    const newWallet = new Wallet(wallet);
-    return newWallet;
+    return new Wallet(wallet);
   };
 
   return { findByUserId, create, calculateBalance };

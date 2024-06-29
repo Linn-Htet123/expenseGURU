@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import {HttpBadRequestHandler} from "@/backend/helpers/httpExceptionHandler";
+import { HttpBadRequestHandler } from "@/backend/helpers/httpExceptionHandler";
 
 export const transformToObjectId = (id: string, errorMsg: string) => {
   try {
@@ -25,10 +25,12 @@ export const checkDateFormat = (date: string): boolean => {
   );
 };
 
-export const withErrorHandling = (fn: Function) => async (...args: any[]) => {
-  try {
-    return await fn(...args);
-  } catch (error:any) {
-    return HttpBadRequestHandler(error.message);
-  }
-};
+export const withErrorHandling =
+  (fn: Function) =>
+  async (...args: any[]) => {
+    try {
+      return await fn(...args);
+    } catch (error: any) {
+      return HttpBadRequestHandler(error.message);
+    }
+  };

@@ -9,7 +9,7 @@ export const TransactionValidation = z
       })
       .refine(
         (val) => Number(val.replace(/,/g, "")) >= 1,
-        "Amount must be at leat 1."
+        "Amount must be at leat 1.",
       ),
   })
   .required();
